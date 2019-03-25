@@ -10,10 +10,8 @@ public class MClass extends MIdentifier {
 	//
 	public MClass(String classname, MType parent, String fatherName) {
 		super(classname, parent);
-		// members = new ArrayList<MType>();
-		// vars = new ArrayList<MType>();
-		members = new ArrayList<MMethod>();
-		vars = new ArrayList<MVar>();
+		members = new ArrayList<MType>();
+		vars = new ArrayList<MType>();
 		father = fatherName;
 	}
 }

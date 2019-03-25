@@ -8,7 +8,6 @@ public class MClassList extends MType {
 	//
 	public MClassList(String classListName, MType parent) {
 		super(classListName, parent);
-		// members = new ArrayList<MType>();
-		members = new ArrayList<MClass>();
+		members = new ArrayList<MType>();
 	}
 }
