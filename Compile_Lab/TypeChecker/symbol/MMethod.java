@@ -17,5 +17,27 @@ public class MMethod extends MIdentifier {
 		params = new ArrayList<String>();
 		type = returnType;
 	}
+	public MMethod(MMethod mth) {
+		super((MIdentifier)mth);
+		vars = new ArrayList<MType>(mth.vars);
+		params = new ArrayList<String>(mth.params);
+		type = mth.type;
+	}
+	public String ConcatParams() {
+		String _ret = "";
+		boolean findany = false;
+		for (String param : params) {
+			if (findany)
+				_ret = _ret + "," + param;
+			else
+				_ret = param;
+			findany = true;
+		}
+		return _ret;
+	}
+	public boolean CheckParamMatch(String s) {
+		String params = ConcatParams();
+		return params.equals(s);
+	}
 	// method parameter types setup must be done by user
 }

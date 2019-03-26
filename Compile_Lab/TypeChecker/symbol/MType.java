@@ -9,6 +9,10 @@ public class MType {
 		name = newName;
 		parent = itsParent;
 	}
+	public MType(MType mt) {
+		name = mt.name;
+		parent = mt.parent;
+	}
 	public MType membersHasThis(String candidate) {
 		if (members == null) {
 			System.err.println(String.format("MType instance %s doesn't has members.",
