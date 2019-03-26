@@ -24,7 +24,7 @@ public class MType {
 	}
 	public MType varsHasThis(String candidate) {
 		if (vars == null) {
-			System.err.println(String.format("MType instance %s doesn't has vars.",
+			System.err.println(String.format("MType instance %s doesn't have vars.",
 				name));
 			System.exit(1);
 		}
