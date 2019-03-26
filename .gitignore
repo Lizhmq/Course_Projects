@@ -1,3 +1,6 @@
 Compile_Lab/TypeChecker/clean
 Compile_Lab/TypeChecker/symbol/MClass.class
 Compile_Lab/TypeChecker/symbol/MType.class
+Compile_Lab/TypeChecker/visitor/BuildSymbolTableVisitor.class
+Compile_Lab/TypeChecker/visitor/GJDepthFirst.class
+Compile_Lab/TypeChecker/visitor/UndefinedVisitor.class
