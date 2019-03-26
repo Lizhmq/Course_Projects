@@ -29,14 +29,17 @@ public class BuildSymbolTableVisitor extends GJVoidDepthFirst<MType> {
 	public void visit(MainClass n, MType table) {
 		n.f0.accept(this, table);
 		n.f1.accept(this, table);
+		// MType mainclass = table.addMember(
+			// "MClass", "Main", table, null);
 		MType mainclass = table.addMember(
-			"MClass", "Main", table, null);
+			"MClass", ((Identifier)(n.f1)).f0.toString(), table, null
+		);
 		n.f2.accept(this, table); 
 		n.f3.accept(this, table);
 		n.f4.accept(this, table);
 		n.f5.accept(this, table);
 		n.f6.accept(this, table);
-		MType mainfunc = mainclass.addMember(
+		MMethod mainfunc = (MMethod)mainclass.addMember(
 			"MMethod", "main", mainclass, "void");
 		n.f7.accept(this, table);
 		n.f8.accept(this, table);
@@ -44,7 +47,8 @@ public class BuildSymbolTableVisitor extends GJVoidDepthFirst<MType> {
 		n.f10.accept(this, table);
 		n.f11.accept(this, table);
 		mainfunc.addVar(((Identifier)(n.f11)).f0.toString(), 
-			mainfunc, "String[]");  
+			mainfunc, "String[]");
+		mainfunc.params.add("String[]");
 		n.f12.accept(this, table);
 		n.f13.accept(this, table);
 		n.f14.accept(this, mainfunc);
