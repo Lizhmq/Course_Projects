@@ -37,6 +37,10 @@ public class MMethod extends MIdentifier {
 	}
 	public boolean CheckParamMatch(String s) {
 		String params = ConcatParams();
+		// if (params == null)
+		// 	System.out.println(String.format("%s", this.name));
+		if (s == null)
+			return params == null;
 		return params.equals(s);
 	}
 	// method parameter types setup must be done by user

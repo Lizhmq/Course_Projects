@@ -179,7 +179,6 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		n.f0.accept(this, table);
 		n.f1.accept(this, table);
 		String type = n.f2.accept(this, table);
-		System.out.println(type);
 		if (type == null || !type.equals("int")) {
 			System.out.println(String.format(
 				"Expression \"%s\" in PrintStatement is not of type \"int\"",
