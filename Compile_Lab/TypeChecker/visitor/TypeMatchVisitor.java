@@ -407,7 +407,16 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		return "boolean";
 	}
 	public String visit(ThisExpression n, MType table) {
-		return ((MClass)table).name;
+		String name = null;
+		while (true) {
+			try {
+				name = ((MClass)table).name;
+				break;
+			} catch (Exception e) {
+				table = table.parent;
+			}
+		}
+		return name;
 	}
 	public String visit(AllocationExpression n, MType table) {
 		return n.f1.accept(this, table);
