@@ -13,7 +13,7 @@ public class Main {
 
 			// Build our global symbol table
 			root.accept(new BuildSymbolTableVisitor(), classListTable);
-			// root.accept(new TypeMatchVisitor(), classListTable);
+			root.accept(new TypeMatchVisitor(), classListTable);
 			root.accept(new UndefinedVisitor(), classListTable);
 			// Check circle in succession
 			if (!Main.circle((MClassList)classListTable)) {
