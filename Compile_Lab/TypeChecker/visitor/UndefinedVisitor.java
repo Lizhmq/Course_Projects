@@ -183,9 +183,12 @@ public class UndefinedVisitor extends GJDepthFirst<String, MType> {
 		}
 		n.f1.accept(this, argu);
 		String method = n.f2.accept(this, argu);
-		if (classOfname.membersHasThis(method) == null) {
-			System.out.println(String.format("Object %s doesn\'t has method %s", name, method));
-			System.exit(0);
+		while (classOfname.membersHasThis(method) == null) {
+			if (classOfname.parent == null) {
+				System.out.println(String.format("Object %s doesn\'t has method %s", name, method));
+				System.exit(0);
+			}
+			classOfname = classOfname.parent;
 		}
 		n.f3.accept(this, argu);
 		n.f4.accept(this, argu);

@@ -122,6 +122,30 @@ public class BuildSymbolTableVisitor extends GJDepthFirst<String, MType> {
 		n.f8.accept(this, method);
 		n.f9.accept(this, table);
 		n.f10.accept(this, method);
+		MType classenv = table.parent;
+		MMethod itmethod = (MMethod) method;
+		while (classenv != null) {
+			MType sameName = classenv.membersHasThis(name);
+			MMethod sameNameMethod = (MMethod) sameName;
+			if (sameName != null) {
+				if (sameNameMethod.type != itmethod.type) {
+					System.out.println(String.format("Method %s override error: return type mismatch.", name));
+					System.exit(0);
+				}
+				
+				if (sameNameMethod.params.size() != itmethod.params.size()) {
+					System.out.println(String.format("Method %s override error: parameter list length mismatch.", name));
+					System.exit(0);
+				}
+				for (int i = 0; i < itmethod.params.size(); ++i) {
+					if (!itmethod.params.get(i).equals(sameNameMethod.params.get(i))) {
+						System.out.println(String.format("Method %s override error: parameter type mismatch.", name));
+						System.exit(0);
+					}
+				}
+			}
+			classenv = classenv.parent;
+		}
 		n.f11.accept(this, table);
 		n.f12.accept(this, table);
 		return "";
