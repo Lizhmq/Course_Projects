@@ -75,11 +75,12 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		return _ret;
 	}
 	// no need to override VarDeclaration
+	// return type check
 	public String visit(MethodDeclaration n, MType table) {
 		String _ret = null;
 		n.f0.accept(this, table);
 		n.f1.accept(this, table);
-		n.f2.accept(this, table);
+		String declaretype = n.f2.accept(this, table);
 		String name = ((Identifier)n.f2).f0.toString();
 		MType method = table.membersHasThis(name);
 		n.f3.accept(this, table);
@@ -89,7 +90,14 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		n.f7.accept(this, method);
 		n.f8.accept(this, method);
 		n.f9.accept(this, table);
-		n.f10.accept(this, method);
+		String rettype = n.f10.accept(this, method);
+		if (declaretype == null && rettype != null || !declaretype.equals(rettype)) {
+			System.out.println(String.format(
+				"Retrn Type doesn't match: \"%s\", \"%s\" in Method %s",
+				declaretype, rettype, name
+			));
+			System.exit(0);
+		}
 		n.f11.accept(this, table);
 		n.f12.accept(this, table);
 		return _ret;
@@ -369,9 +377,11 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		MType method = cls.membersHasThis(method_name);
 		n.f3.accept(this, table);
 		String params = n.f4.accept(this, table);
+		if (params == null)
+			params = "";
 		if (!((MMethod)method).CheckParamMatch(params)) {
-			System.out.println(String.format("Wrong Parameters %s for Method %s.",
-				 params, method_name));
+			System.out.println(String.format("Wrong Parameters %s for Method %s--%s.",
+				 params, method_name, ((MMethod)method).ConcatParams()));
 			System.exit(0);
 		}
 		n.f5.accept(this, table);
@@ -383,7 +393,7 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		String type0 = n.f0.accept(this, table);
 		String rest = n.f1.accept(this, table);
 		if (rest != null)
-			_ret = type0 + "," + n.f1.accept(this, table);
+			_ret = type0 +  n.f1.accept(this, table);
 		else
 			_ret = type0;
 		return _ret;
