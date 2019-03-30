@@ -11,6 +11,30 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 	/* 
 	 * 
 	 */
+	/* helper function */
+	 // check if typeb can be assigned to typea
+	boolean TypeMatch(String typea, String typeb, MType table) {
+		if (typea == null && typeb == null)
+			return true;
+		if (typea == null && typeb != null || typea != null && typeb == null)
+			return false;
+		if (typea.equals(typeb))
+			return true;
+		while (table.parent != null)
+			table = table.parent;
+		MType clsa = table.membersHasThis(typea);
+		MType clsb = table.membersHasThis(typeb);
+		if (clsa == null || clsb == null)
+			return false;
+		while (((MClass)clsb).father != null) {
+			clsb = table.membersHasThis(((MClass)clsb).father);
+			assert(clsb != null);
+			if (clsa.name.equals(clsb.name))
+				return true;
+		}
+		return false;
+	}
+
 	// for ExpressionList
 	public String visit(NodeListOptional n, MType table) {
 		if ( n.present() ) {
@@ -91,9 +115,9 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		n.f8.accept(this, method);
 		n.f9.accept(this, table);
 		String rettype = n.f10.accept(this, method);
-		if (declaretype == null && rettype != null || !declaretype.equals(rettype)) {
+		if (!TypeMatch(declaretype, rettype, table)) {
 			System.out.println(String.format(
-				"Retrn Type doesn't match: \"%s\", \"%s\" in Method %s",
+				"Return Type doesn't match: \"%s\", \"%s\" in Method %s",
 				declaretype, rettype, name
 			));
 			System.exit(0);
@@ -112,7 +136,7 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		String type1 = n.f0.accept(this, table);
 		n.f1.accept(this, table);
 		String type2 = n.f2.accept(this, table);
-		if (type1 == null || !type1.equals(type2)) {
+		if (!TypeMatch(type1, type2, table)) {
 			System.out.println(String.format(
 				"Type doesn't match: \"%s\", \"%s\" in Assignment",
 				n.f0.toString(), n.f2.toString()
@@ -224,12 +248,19 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 	 */
 	public String visit(Identifier n, MType table) {
 		String _ret = null;
+		MType globaltable = table;
+		while (globaltable.parent != null)
+			globaltable = globaltable.parent;
 		MType a = null, b = null;
 		MType curtable;
+		MType cls = null;
 		curtable = table;
 		while (a == null && curtable != null) {
 			if (curtable.members != null)
 				a = curtable.membersHasThis(n.f0.toString());
+			// get current class
+			if (globaltable.membersHasThis(curtable.name) != null)
+				cls = globaltable.membersHasThis(curtable.name);
 			curtable = curtable.parent;
 		}
 		curtable = table;
@@ -239,6 +270,8 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 			curtable = curtable.parent;
 		}
 		if (a == null && b == null) {
+			if (cls.father != null)
+				return visit(n, globaltable.membersHasThis(cls.father));
 			System.out.println(String.format(
 				"Identifier \"%s\" not found in \"%s\".",
 				n.f0.toString(), table.name
@@ -379,10 +412,20 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		String params = n.f4.accept(this, table);
 		if (params == null)
 			params = "";
-		if (!((MMethod)method).CheckParamMatch(params)) {
+		String methodparams = ((MMethod)method).ConcatParams();
+		String []a = params.split(",");
+		String []b = methodparams.split(",");
+		if (a.length != b.length) {
 			System.out.println(String.format("Wrong Parameters %s for Method %s--%s.",
 				 params, method_name, ((MMethod)method).ConcatParams()));
 			System.exit(0);
+		}
+		for (int i = 0; i < a.length; ++i) {
+			if (!TypeMatch(b[i], a[i], table)) {
+				System.out.println(String.format("Wrong Parameters %s for Method %s--%s.",
+					 params, method_name, ((MMethod)method).ConcatParams()));
+				System.exit(0);
+			}
 		}
 		n.f5.accept(this, table);
 		return method_rettype;
