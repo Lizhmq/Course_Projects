@@ -6,7 +6,7 @@ class test69{
 
 class Test2 extends Test{
 
-    public Test2 start(){  //TE
+    public Test2 start(){  // TE
 
 	return this;
     }

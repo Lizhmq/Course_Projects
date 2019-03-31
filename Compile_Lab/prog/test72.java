@@ -4,7 +4,7 @@ class test72{
     }
 }
 
-class Test extends NotPresent {  //TE
+class Test extends NotPresent {  // TE
 
     public int start(){
 	

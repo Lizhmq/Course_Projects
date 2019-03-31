@@ -67,10 +67,10 @@
 66 Program type checked successfully
 67 Type error
 68 Type error
-69 Program type checked successfully
+69 Type error
 70 Type error
 71 Type error
-72 Program type checked successfully
+72 Type error
 73 Program type checked successfully
 74 Program type checked successfully
 75 Program type checked successfully

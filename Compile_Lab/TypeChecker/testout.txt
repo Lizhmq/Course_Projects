@@ -1,0 +1,304 @@
+../prog/test00.java
+Method next override error: return type mismatch.
+
+../prog/test01.java
+Program exits normally. No type error found in ../prog/test01.java.
+
+../prog/test02.java
+Program exits normally. No type error found in ../prog/test02.java.
+
+../prog/test03.java
+Program exits normally. No type error found in ../prog/test03.java.
+
+../prog/test04.java
+Program exits normally. No type error found in ../prog/test04.java.
+
+../prog/test05.java
+Program exits normally. No type error found in ../prog/test05.java.
+
+../prog/test06.java
+Program exits normally. No type error found in ../prog/test06.java.
+
+../prog/test07.java
+Program exits normally. No type error found in ../prog/test07.java.
+
+../prog/test08.java
+Program exits normally. No type error found in ../prog/test08.java.
+
+../prog/test09.java
+Program exits normally. No type error found in ../prog/test09.java.
+
+../prog/test10.java
+Program exits normally. No type error found in ../prog/test10.java.
+
+../prog/test11.java
+Type doesn't match: "int", "boolean" in Assignment
+
+../prog/test12.java
+Type doesn't match: "int", "boolean" in Assignment
+
+../prog/test13.java
+Type doesn't match: "boolean", "int" in Assignment
+
+../prog/test14.java
+Type doesn't match: "boolean", "int" in Assignment
+
+../prog/test15.java
+Type doesn't match: "boolean", "int" in Assignment
+
+../prog/test16.java
+Identifier "op" not found in "start".
+Warning: This shouldn't happen.	-- TypeMatchVisitor
+Expression "null" in PrintStatement is not of type "int"
+
+../prog/test17.java
+Identifier "op" not found in "next".
+Warning: This shouldn't happen.	-- TypeMatchVisitor
+Type doesn't match: "int", "null" in Assignment
+
+../prog/test18.java
+Type doesn't match: "int" is not of type int[] in ArrayLookup
+
+../prog/test19.java
+Type doesn't match: "int[]", "int" in Assignment
+
+../prog/test20.java
+Inavalid usage of '.' for op in start
+
+../prog/test21.java
+Expression "int" in ArrayAssignment is not of type "int"
+
+../prog/test22.java
+Expression "int" in ArrayAssignment is not of type "int"
+
+../prog/test23.java
+Expression "int" in ArrayAssignment is not of type "int"
+
+../prog/test24.java
+Expression "int" in NotExpression is not of type "boolean"
+
+../prog/test25.java
+Expression "int[]" in NotExpression is not of type "boolean"
+
+../prog/test26.java
+Expression "Test" in NotExpression is not of type "boolean"
+
+../prog/test27.java
+Program exits normally. No type error found in ../prog/test27.java.
+
+../prog/test28.java
+Expression "Test" in NotExpression is not of type "boolean"
+
+../prog/test29.java
+Invalid usage of new: op is not a class.
+
+../prog/test30.java
+Invalid usage of new: test is not a class.
+
+../prog/test31.java
+Type of Expression "boolean" in ArrayAllocation should be int.
+
+../prog/test32.java
+Type of Expression "int[]" in ArrayAllocation should be int.
+
+../prog/test33.java
+Type of Expression "Test" in ArrayAllocation should be int.
+
+../prog/test34.java
+Expression "boolean" in PrintStatement is not of type "int"
+
+../prog/test35.java
+Expression "Test" in PrintStatement is not of type "int"
+
+../prog/test36.java
+Expression "Test" in PrintStatement is not of type "int"
+
+../prog/test37.java
+Expression "int" in WhileStatement is not of type "boolean"
+
+../prog/test38.java
+Expression "Test" in WhileStatement is not of type "boolean"
+
+../prog/test39.java
+Expression "Test" in WhileStatement is not of type "boolean"
+
+../prog/test40.java
+Expression "int" in IfStatement is not of type "boolean"
+
+../prog/test41.java
+Expression "Test" in IfStatement is not of type "boolean"
+
+../prog/test42.java
+Expression "Test" in IfStatement is not of type "boolean"
+
+../prog/test43.java
+Type doesn't match: "op" is not of type int[] in ArrayAssignment
+
+../prog/test44.java
+Type doesn't match: "op" is not of type int[] in ArrayAssignment
+
+../prog/test45.java
+Expression "int" in ArrayAssignment is not of type "int"
+
+../prog/test46.java
+Expression "int" in ArrayAssignment is not of type "int"
+
+../prog/test47.java
+Expression "int" in ArrayAssignment is not of type "int"
+
+../prog/test48.java
+Type doesn't match: "int", "boolean" in ArrayAssignment
+
+../prog/test49.java
+Type doesn't match: "int", "Test" in ArrayAssignment
+
+../prog/test50.java
+Type doesn't match: "int", "int[]" in ArrayAssignment
+
+../prog/test51.java
+Type doesn't match: "int", "Test" in Assignment
+
+../prog/test52.java
+Type doesn't match: "boolean", "int" in Assignment
+
+../prog/test53.java
+Type doesn't match: "int[]", "int" in Assignment
+
+../prog/test54.java
+Type doesn't match: "Test", "Test2" in Assignment
+
+../prog/test55.java
+Program exits normally. No type error found in ../prog/test55.java.
+
+../prog/test56.java
+Program exits normally. No type error found in ../prog/test56.java.
+
+../prog/test57.java
+Program exits normally. No type error found in ../prog/test57.java.
+
+../prog/test58.java
+Program exits normally. No type error found in ../prog/test58.java.
+
+../prog/test59.java
+Type doesn't match: "B", "A" in Assignment
+
+../prog/test60.java
+Type doesn't match: "C", "B" in Assignment
+
+../prog/test61.java
+Type doesn't match: "C", "A" in Assignment
+
+../prog/test62.java
+Program exits normally. No type error found in ../prog/test62.java.
+
+../prog/test63.java
+Type doesn't match: "Test2", "Test" in Assignment
+
+../prog/test64.java
+Undefined variable: i in start
+
+../prog/test65.java
+Return Type doesn't match: "Test", "boolean" in Method next
+
+../prog/test66.java
+Program exits normally. No type error found in ../prog/test66.java.
+
+../prog/test67.java
+Return Type doesn't match: "Test", "int" in Method next
+
+../prog/test68.java
+Return Type doesn't match: "Test", "Test2" in Method next
+
+../prog/test69.java
+Method start override error: return type mismatch.
+
+../prog/test70.java
+Type doesn't match: "Test", "int" in Assignment
+
+../prog/test71.java
+var "i" is declared for more than one times
+
+../prog/test72.java
+Unknown class: NotPresent
+
+../prog/test73.java
+Program exits normally. No type error found in ../prog/test73.java.
+
+../prog/test74.java
+Program exits normally. No type error found in ../prog/test74.java.
+
+../prog/test75.java
+Program exits normally. No type error found in ../prog/test75.java.
+
+../prog/test76.java
+Program exits normally. No type error found in ../prog/test76.java.
+
+../prog/test77.java
+Program exits normally. No type error found in ../prog/test77.java.
+
+../prog/test78.java
+Program exits normally. No type error found in ../prog/test78.java.
+
+../prog/test79.java
+Program exits normally. No type error found in ../prog/test79.java.
+
+../prog/test80.java
+Program exits normally. No type error found in ../prog/test80.java.
+
+../prog/test81.java
+Program exits normally. No type error found in ../prog/test81.java.
+
+../prog/test82.java
+Program exits normally. No type error found in ../prog/test82.java.
+
+../prog/test83.java
+Wrong Parameters int,int for Method next--int.
+
+../prog/test84.java
+Wrong Parameters boolean for Method next--boolean,boolean.
+
+../prog/test85.java
+Program exits normally. No type error found in ../prog/test85.java.
+
+../prog/test86.java
+Type doesn't match: "Test", "Test2" in Assignment
+
+../prog/test87.java
+Type of Expression "boolean" in Plus should be int.
+
+../prog/test88.java
+Wrong Parameters Test,int for Method next--int,Test,boolean.
+
+../prog/test89.java
+Program exits normally. No type error found in ../prog/test89.java.
+
+../prog/test90.java
+Program exits normally. No type error found in ../prog/test90.java.
+
+../prog/test91.java
+Object test of type Test doesn't has method next
+
+../prog/test92.java
+Object test of type Test doesn't has method next
+
+../prog/test93.java
+Program exits normally. No type error found in ../prog/test93.java.
+
+../prog/test94.java
+Program exits normally. No type error found in ../prog/test94.java.
+
+../prog/test95.java
+Program exits normally. No type error found in ../prog/test95.java.
+
+../prog/test96.java
+Program exits normally. No type error found in ../prog/test96.java.
+
+../prog/test97.java
+Program exits normally. No type error found in ../prog/test97.java.
+
+../prog/test98.java
+Program exits normally. No type error found in ../prog/test98.java.
+
+../prog/test99.java
+Program exits normally. No type error found in ../prog/test99.java.
+
