@@ -1,0 +1,100 @@
+0 Type error
+1 Program type checked successfully
+2 Program type checked successfully
+3 Program type checked successfully
+4 Program type checked successfully
+5 Program type checked successfully
+6 Program type checked successfully
+7 Program type checked successfully
+8 Program type checked successfully
+9 Program type checked successfully
+10 Program type checked successfully
+11 Type error
+12 Type error
+13 Type error
+14 Type error
+15 Type error
+16 Type error
+17 Type error
+18 Type error
+19 Type error
+20 Type error
+21 Type error
+22 Type error
+23 Type error
+24 Type error
+25 Type error
+26 Type error
+27 Program type checked successfully
+28 Type error
+29 Type error
+30 Type error
+31 Type error
+32 Type error
+33 Type error
+34 Type error
+35 Type error
+36 Type error
+37 Type error
+38 Type error
+39 Type error
+40 Type error
+41 Type error
+42 Type error
+43 Type error
+44 Type error
+45 Type error
+46 Type error
+47 Type error
+48 Type error
+49 Type error
+50 Type error
+51 Type error
+52 Type error
+53 Type error
+54 Type error
+55 Program type checked successfully
+56 Program type checked successfully
+57 Program type checked successfully
+58 Program type checked successfully
+59 Type error
+60 Type error
+61 Type error
+62 Program type checked successfully
+63 Type error
+64 Type error
+65 Type error
+66 Program type checked successfully
+67 Type error
+68 Type error
+69 Program type checked successfully
+70 Type error
+71 Type error
+72 Program type checked successfully
+73 Program type checked successfully
+74 Program type checked successfully
+75 Program type checked successfully
+76 Program type checked successfully
+77 Program type checked successfully
+78 Program type checked successfully
+79 Program type checked successfully
+80 Program type checked successfully
+81 Program type checked successfully
+82 Program type checked successfully
+83 Type error
+84 Type error
+85 Program type checked successfully
+86 Type error
+87 Type error
+88 Type error
+89 Program type checked successfully
+90 Program type checked successfully
+91 Type error
+92 Type error
+93 Program type checked successfully
+94 Program type checked successfully
+95 Program type checked successfully
+96 Program type checked successfully
+97 Program type checked successfully
+98 Program type checked successfully
+99 Program type checked successfully

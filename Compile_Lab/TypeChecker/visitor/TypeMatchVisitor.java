@@ -55,7 +55,7 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		n.f0.accept(this, table);
 		n.f1.accept(this, table);
 		MType mainfunc = table.membersHasThis(
-			((Identifier)(n.f1)).f0.toString()).membersHasThis("main");
+			((Identifier)n.f1).f0.toString()).membersHasThis("main");
 		n.f2.accept(this, table);
 		n.f3.accept(this, table);
 		n.f4.accept(this, table);
@@ -78,7 +78,7 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		String _ret = null;
 		n.f0.accept(this, table);
 		n.f1.accept(this, table);
-		MType newClass = table.membersHasThis(((Identifier)(n.f1)).f0.toString());
+		MType newClass = table.membersHasThis(((Identifier)n.f1).f0.toString());
 		n.f2.accept(this, table);
 		n.f3.accept(this, newClass);
 		n.f4.accept(this, newClass);
@@ -89,7 +89,7 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		String _ret = null;
 		n.f0.accept(this, table);
 		n.f1.accept(this, table);
-		MType newClass = table.membersHasThis(((Identifier)(n.f1)).f0.toString());
+		MType newClass = table.membersHasThis(((Identifier)n.f1).f0.toString());
 		n.f2.accept(this, table);
 		n.f3.accept(this, table);
 		n.f4.accept(this, table);
@@ -139,7 +139,7 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		if (!TypeMatch(type1, type2, table)) {
 			System.out.println(String.format(
 				"Type doesn't match: \"%s\", \"%s\" in Assignment",
-				n.f0.toString(), n.f2.toString()
+				((Identifier)n.f0).f0.toString(), ((Expression)n.f2).f0.toString()
 			));
 			System.exit(0);
 		}
@@ -155,7 +155,7 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		if (type1 == null || !type1.equals(type2)) {
 			System.out.println(String.format(
 				"Type doesn't match: \"%s\", \"%s\" in ArrayAssignment",
-				n.f0.toString(), n.f5.toString()
+				((Identifier)n.f0).f0.toString(), ((Expression)n.f5).f0.toString()
 			));
 			System.exit(0);
 		}
@@ -163,7 +163,7 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		if (type3 == null || !type3.equals("int")) {
 			System.out.println(String.format(
 				"Expression \"%s\" in ArrayAssignment is not of type \"int\"",
-				n.f2.toString(), n.f5.toString()
+				((Expression)n.f5).f0.toString()
 			));
 			System.exit(0);
 		}
@@ -178,7 +178,7 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		if (type == null || !type.equals("boolean")) {
 			System.out.println(String.format(
 				"Expression \"%s\" in IfStatement is not of type \"boolean\"",
-				((Expression)(n.f2)).toString()
+				((Expression)(n.f2)).f0.toString()
 			));
 			System.exit(0);
 		}
@@ -197,7 +197,7 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		if (type == null || !type.equals("boolean")) {
 			System.out.println(String.format(
 				"Expression \"%s\" in WhileStatement is not of type \"boolean\"",
-				((Expression)(n.f2)).toString()
+				((Expression)n.f2).f0.toString()
 			));
 			System.exit(0);
 		}
@@ -214,7 +214,7 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		if (type == null || !type.equals("int")) {
 			System.out.println(String.format(
 				"Expression \"%s\" in PrintStatement is not of type \"int\"",
-				((Expression)(n.f2)).toString()
+				((Expression)n.f2).f0.toString()
 			));
 			System.exit(0);
 		}
@@ -236,7 +236,7 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		if (type == null || !type.equals("int")) {
 			System.out.println(String.format(
 				"PrimaryExpression \"%s\" in ArrayLookup is not of type \"int\"",
-				n.f2.toString()
+				((PrimaryExpression)n.f2).f0.toString()
 			));
 			System.exit(0);
 		}
@@ -270,6 +270,7 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 			curtable = curtable.parent;
 		}
 		if (a == null && b == null) {
+			assert(cls != null);
 			if (cls.father != null)
 				return visit(n, globaltable.membersHasThis(cls.father));
 			System.out.println(String.format(
@@ -306,14 +307,14 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		if (type1 == null || !type1.equals("int")) {
 			System.out.println(String.format(
 				"Type of Expression \"%s\" in Compare should be int.",
-				n.f0.toString()
+				((PrimaryExpression)n.f0).f0.toString()
 			));
 			System.exit(0);
 		}
 		if (type2 == null || !type2.equals("int")) {
 			System.out.println(String.format(
 				"Type of Expression \"%s\" in Compare should be int.",
-				n.f2.toString()
+				((PrimaryExpression)n.f2).f0.toString()
 			));
 			System.exit(0);
 		}
@@ -327,15 +328,14 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		if (type1 == null || !type1.equals("int")) {
 			System.out.println(String.format(
 				"Type of Expression \"%s\" in Plus should be int.",
-				n.f0.toString()
+				((PrimaryExpression)n.f0).f0.toString()
 			));
 			System.exit(0);
 		}
 		if (type2 == null || !type2.equals("int")) {
 			System.out.println(String.format(
 				"Type of Expression \"%s\" in Plus should be int.",
-				n.f2.toString()
-			));
+				((PrimaryExpression)n.f2).f0.toString()));
 			System.exit(0);
 		}
 		return "int";
@@ -348,14 +348,14 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		if (type1 == null || !type1.equals("int")) {
 			System.out.println(String.format(
 				"Type of Expression \"%s\" in Minus should be int.",
-				n.f0.toString()
+				((PrimaryExpression)n.f0).f0.toString()
 			));
 			System.exit(0);
 		}
 		if (type2 == null || !type2.equals("int")) {
 			System.out.println(String.format(
 				"Type of Expression \"%s\" in Minus should be int.",
-				n.f2.toString()
+				((PrimaryExpression)n.f2).f0.toString()
 			));
 			System.exit(0);
 		}
@@ -369,14 +369,14 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		if (type1 == null || !type1.equals("int")) {
 			System.out.println(String.format(
 				"Type of Expression \"%s\" in Times should be int.",
-				n.f0.toString()
+				((PrimaryExpression)n.f0).f0.toString()
 			));
 			System.exit(0);
 		}
 		if (type2 == null || !type2.equals("int")) {
 			System.out.println(String.format(
 				"Type of Expression \"%s\" in Times should be int.",
-				n.f2.toString()
+				((PrimaryExpression)n.f2).f0.toString()
 			));
 			System.exit(0);
 		}
@@ -389,6 +389,9 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 	// so is ExpressionList
 	public String visit(MessageSend n, MType table) {
 		String classname = n.f0.accept(this, table);
+		MType globaltable = table;
+		while (globaltable.parent != null)
+			globaltable = globaltable.parent;
 		MType cls = null;
 		MType curtable;
 		curtable = table;
@@ -408,11 +411,18 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		String method_rettype = n.f2.accept(this, cls);
 		String method_name = ((Identifier)n.f2).f0.toString();
 		MType method = cls.membersHasThis(method_name);
+		while (method == null) {
+			assert(cls != null);
+			cls =  globaltable.membersHasThis(cls.father);
+			method = cls.membersHasThis(method_name);
+		}
 		n.f3.accept(this, table);
 		String params = n.f4.accept(this, table);
 		if (params == null)
 			params = "";
 		String methodparams = ((MMethod)method).ConcatParams();
+		if (methodparams == null)
+			methodparams = "";	
 		String []a = params.split(",");
 		String []b = methodparams.split(",");
 		if (a.length != b.length) {
