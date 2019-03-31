@@ -5,24 +5,16 @@ import symbol.*;
 
 public class BuildSymbolTableVisitor extends GJDepthFirst<String, MType> {
 	public String visit(VarDeclaration n, MType table) {
-		// Identifier id = (Identifier)n.f1;
-		// System.out.println("VarName:" + id.f0.toString());
-		if (table.varsHasThis(((Identifier)(n.f1)).f0.toString()) != null) {
-			System.out.println(String.format(
-				"var \"%s\" is declared for more than one times", 
-				((Identifier)(n.f1)).f0.toString()));
-			System.exit(0);
-		}
-		// table.addVar(((Identifier)(n.f1)).f0.toString(), 
-		// 			table,
-		// 			((Identifier)(n.f1)).f0.toString());
-
 		String typeName = n.f0.accept(this, table);
 		String ident = n.f1.accept(this, table);
+
+		if (ident.equals("int") || ident.equals("int[]") || ident.equals("boolean")) {
+			System.out.println("Identifier can't be reserved key words in {int, int[], boolean}.");
+			System.exit(0);
+		}
 		if (table.varsHasThis(ident) != null) {
 			System.out.println(String.format(
-				"var \"%s\" is declared for more than one times", 
-				((Identifier)(n.f1)).f0.toString()));
+				"var \"%s\" is declared for more than one times", ident));
 			System.exit(0);
 		}
 		n.f2.accept(this, table);
@@ -34,26 +26,21 @@ public class BuildSymbolTableVisitor extends GJDepthFirst<String, MType> {
 	*/
 	public String visit(MainClass n, MType table) {
 		n.f0.accept(this, table);
-		n.f1.accept(this, table);
-		// MType mainclass = table.addMember(
-			// "MClass", "Main", table, null);
-		MType mainclass = table.addMember(
-			"MClass", ((Identifier)(n.f1)).f0.toString(), table, null
-		);
+		String MAIN = n.f1.accept(this, table);
+		MType mainclass = table.addMember("MClass", MAIN, table, null);
 		n.f2.accept(this, table); 
 		n.f3.accept(this, table);
 		n.f4.accept(this, table);
 		n.f5.accept(this, table);
 		n.f6.accept(this, table);
-		MMethod mainfunc = (MMethod)mainclass.addMember(
-			"MMethod", "main", mainclass, "String");
+		MMethod mainfunc = (MMethod)(mainclass.addMember(
+			"MMethod", "main", mainclass, "String"));
 		n.f7.accept(this, table);
 		n.f8.accept(this, table);
 		n.f9.accept(this, table);
 		n.f10.accept(this, table);
-		n.f11.accept(this, table);
-		mainfunc.addVar(((Identifier)(n.f11)).f0.toString(), 
-			mainfunc, "String[]");
+		String args = n.f11.accept(this, table);
+		mainfunc.addVar(args, mainfunc, "String[]");
 		mainfunc.params.add("String[]");
 		n.f12.accept(this, table);
 		n.f13.accept(this, table);
@@ -65,17 +52,16 @@ public class BuildSymbolTableVisitor extends GJDepthFirst<String, MType> {
 	}
 	public String visit(ClassDeclaration n, MType table) {
 		n.f0.accept(this, table);
-		n.f1.accept(this, table);
-		if(table.membersHasThis(((Identifier)(n.f1)).f0.toString()) != null){
+		String className = n.f1.accept(this, table);
+		if(table.membersHasThis(className) != null){
 			System.out.println(String.format(
 				"class \"%s\" is declared for more than one times", 
-				((Identifier)(n.f1)).f0.toString()));
+				className));
 			System.exit(0);
 		}
 		table = (MClassList) table;
 		MType newClass = table.addMember("MClass", 
-			((Identifier)(n.f1)).f0.toString(), table, null);
-		//newClass.parent = null;
+			className, table, null);
 		n.f2.accept(this, table);
 		n.f3.accept(this, newClass);
 		n.f4.accept(this, newClass);
@@ -84,19 +70,18 @@ public class BuildSymbolTableVisitor extends GJDepthFirst<String, MType> {
 	}
 	public String visit(ClassExtendsDeclaration n, MType table) {
 		n.f0.accept(this, table);
-		n.f1.accept(this, table);
-		if (table.membersHasThis(((Identifier)(n.f1)).f0.toString()) != null) {
+		String className = n.f1.accept(this, table);
+		if (table.membersHasThis(className) != null) {
 			System.out.println(String.format(
 				"class \"%s\" is declared for more than one times", 
-				((Identifier)(n.f1)).f0.toString()));
+				className));
 			System.exit(0);
 		}
 		table = (MClassList) table;
 		n.f2.accept(this, table);
-		n.f3.accept(this, table);
+		String father = n.f3.accept(this, table);
 		MType newClass = table.addMember( "MClass", 
-			((Identifier)(n.f1)).f0.toString(), table, 
-			((Identifier)(n.f3)).f0.toString());
+			className, table, father);
 		n.f4.accept(this, table);
 		n.f5.accept(this, newClass);
 		n.f6.accept(this, newClass);
@@ -122,6 +107,7 @@ public class BuildSymbolTableVisitor extends GJDepthFirst<String, MType> {
 		n.f8.accept(this, method);
 		n.f9.accept(this, table);
 		n.f10.accept(this, method);
+		/*
 		MType classenv = table.parent;
 		MMethod itmethod = (MMethod) method;
 		while (classenv != null) {
@@ -145,7 +131,7 @@ public class BuildSymbolTableVisitor extends GJDepthFirst<String, MType> {
 				}
 			}
 			classenv = classenv.parent;
-		}
+		}*/
 		n.f11.accept(this, table);
 		n.f12.accept(this, table);
 		return "";

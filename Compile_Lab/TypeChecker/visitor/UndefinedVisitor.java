@@ -72,6 +72,31 @@ public class UndefinedVisitor extends GJDepthFirst<String, MType> {
 		if (method == null) {
 			System.out.println(String.format("No method of name: %s in class %s", methodName, table.name));
 		}
+		MClass classenv = (MClass) table;
+		MClassList global = (MClassList) table.parent;
+		while (classenv.father != null) {
+			//check override in subclass
+			classenv = (MClass)(global.membersHasThis(classenv.father));
+			MMethod same, me = (MMethod) method;
+			if ((same = (MMethod)(classenv.membersHasThis(method.name))) != null) {
+				// subclass has a method of same name
+				// check its parameter and return type
+				if (same.type != me.type) {
+					System.out.println(String.format("Method %s override error: return type mismatch.", me.name));
+					System.exit(0);
+				}
+				if (same.params.size() != me.params.size()) {
+					System.out.println(String.format("Method %s override error: parameter list length mismatch.", me.name));
+					System.exit(0);
+				}
+				for (int i = 0; i < me.params.size(); ++i) {
+					if (!me.params.get(i).equals(same.params.get(i))) {
+						System.out.println(String.format("Method %s override error: parameter type mismatch.", me.name));
+						System.exit(0);
+					}
+				}
+			}
+		}
 		n.f3.accept(this, table);
 		n.f4.accept(this, method);
 		n.f5.accept(this, table);
@@ -247,14 +272,9 @@ public class UndefinedVisitor extends GJDepthFirst<String, MType> {
 		//System.out.println(name);
 		MType classOfname = argu, root = argu;
 		MType r = argu;
-		if (argu == null) {
-			System.out.println("argu = null!");
-			System.exit(0);
-		}
 		while (root.parent != null) {
 			root = root.parent;
 		} 
-		//System.out.println("MessageSend");
 		while (r.varsHasThis(name) == null && r.parent.parent != null) {
 			// find MVar from method to class
 			r = r.parent;
@@ -283,6 +303,11 @@ public class UndefinedVisitor extends GJDepthFirst<String, MType> {
 				classOfname = root.membersHasThis(sym.varsHasThis(name).type);
 			}
 		} else {
+			String vartype = r.varsHasThis(name).type;
+			if (vartype.equals("int") || vartype.equals("int[]") || vartype.equals("boolean")) {
+				System.out.println(String.format("Inavalid usage of \'.\' for %s in %s", name, argu.name));
+				System.exit(0);
+			}
 			classOfname = root.membersHasThis(r.varsHasThis(name).type);
 		}
 		if (c) {
