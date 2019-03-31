@@ -149,7 +149,14 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 	// ArrayAssign type -- Array type can only be "int" in minijava
 	public String visit(ArrayAssignmentStatement n, MType table) {
 		String _ret = null;
-		// String type1 = n.f0.accept(this, table);
+		String id = n.f0.accept(this, table);
+		if (id == null || !id.equals("int[]")) {
+			System.out.println(String.format(
+				"Type doesn't match: \"%s\" is not of type int[] in ArrayAssignment",
+				((Identifier)n.f0).f0.toString()
+			));
+			System.exit(0);
+		}
 		String type1 = "int";
 		String type2 = n.f5.accept(this, table);
 		if (type1 == null || !type1.equals(type2)) {
@@ -231,6 +238,14 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		String _ret = null;
 		// _ret = n.f0.accept(this, table);
 		_ret = "int";
+		String id = n.f0.accept(this, table);
+		if (id == null || !id.equals("int[]")) {
+			System.out.println(String.format(
+				"Type doesn't match: \"%s\" is not of type int[] in ArrayLookup",
+				((PrimaryExpression)n.f0).f0.toString()
+			));
+			System.exit(0);
+		}
 		n.f1.accept(this, table);
 		String type = n.f2.accept(this, table);
 		if (type == null || !type.equals("int")) {
