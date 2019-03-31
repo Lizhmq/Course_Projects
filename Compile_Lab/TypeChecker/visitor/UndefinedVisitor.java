@@ -384,12 +384,14 @@ public class UndefinedVisitor extends GJDepthFirst<String, MType> {
 		return "int[]";
 	}
 	public String visit(AllocationExpression n, MType argu) {
-		if (argu == null) {
-			System.out.println("table = null! in allocationexpression");
-			System.exit(0);
-		}
 		n.f0.accept(this, argu);
 		String idn = n.f1.accept(this, argu);
+		MType root = argu;
+		while (root.parent != null) root = root.parent;
+		if (root.membersHasThis(idn) == null) {
+			System.out.println(String.format("Invalid usage of new: %s is not a class.", idn));
+			System.exit(0);
+		}
 		n.f2.accept(this, argu);
 		n.f3.accept(this, argu);
 		return idn;
