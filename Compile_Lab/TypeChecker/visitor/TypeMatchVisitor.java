@@ -297,6 +297,22 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		return _ret;
 	}
 	public String visit(AndExpression n, MType table) {
+		String type1 = n.f0.accept(this, table);
+		String type2 = n.f2.accept(this, table);
+		if (type1 == null || !type1.equals("boolean")) {
+			System.out.println(String.format(
+				"PrimaryExpression \"%s\" in AndExpression is not of type \"boolean\"",
+				((PrimaryExpression)n.f0).f0.toString()
+			));
+			System.exit(0);
+		}
+		if (type2 == null || !type2.equals("boolean")) {
+			System.out.println(String.format(
+				"PrimaryExpression \"%s\" in AndExpression is not of type \"boolean\"",
+				((PrimaryExpression)n.f2).f0.toString()
+			));
+			System.exit(0);
+		}
 		return "boolean";
 	}
 	// CompareExpression args should be "int"
@@ -383,6 +399,14 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		return "int";
 	}
 	public String visit(ArrayLength n, MType table) {
+		String type = n.f0.accept(this, table);
+		if (type == null || !type.equals("int[]")) {
+			System.out.println(String.format(
+				"Type of Expression \"%s\" in ArrayLength should be int[].",
+				((PrimaryExpression)n.f0).f0.toString()
+			));
+			System.exit(0);
+		}
 		return "int";
 	}
 	// function calls only in MessageSend, check if type Matches
@@ -485,9 +509,25 @@ public class TypeMatchVisitor extends GJDepthFirst<String, MType> {
 		return n.f1.accept(this, table);
 	}
 	public String visit(ArrayAllocationExpression n, MType table) {
+		String type = n.f3.accept(this, table);
+		if (type == null || !type.equals("int")) {
+			System.out.println(String.format(
+				"Type of Expression \"%s\" in ArrayAllocation should be int.",
+				((Expression)n.f3).f0.toString()
+			));
+			System.exit(0);
+		}
 		return "int[]";
 	}
 	public String visit(NotExpression n, MType table) {
+		String type = n.f1.accept(this, table);
+		if (type == null || !type.equals("boolean")) {
+			System.out.println(String.format(
+				"Expression \"%s\" in NotExpression is not of type \"boolean\"",
+				((Expression)n.f1).f0.toString()
+			));
+			System.exit(0);
+		}
 		return "boolean";
 	}
 	public String visit(BracketExpression n, MType table) {
