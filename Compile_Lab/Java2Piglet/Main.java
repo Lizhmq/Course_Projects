@@ -12,7 +12,7 @@ public class Main {
 			MClasses allClasses = new MClasses();
 			// Build our global symbol table
 			root.accept(new MakeSymbolTableVisitor(), allClasses);
-			System.out.println(String.format("Program exits normally. No type error found in %s.", args[0]));
+			System.out.println(String.format("Program exits normally. No type error found in \"%s\".", args[0]));
 			// if (!Main.circle((MClassList)classListTable)) {
 			// 	System.out.println(String.format("Syntax error: circle in succession."));
 			// 	return;
@@ -29,7 +29,7 @@ public class Main {
 			}
 			OutputStream out = new FileOutputStream(outputfile);
 			out.write(pigletCode.getBytes());
-
+			System.out.println(String.format("Piglet code generated -- \"%s\".", outputfile));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

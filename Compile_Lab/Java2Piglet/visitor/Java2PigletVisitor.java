@@ -26,7 +26,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
     }
 
     public String visit(NodeList n, MType env) {
-        StringBuilder b = new StringBuilder("");
+        StringBuilder b = new StringBuilder("\n");
         for (Enumeration<Node> e = n.elements(); e.hasMoreElements(); ) {
             b.append(e.nextElement().accept(this, env));
         }
@@ -35,7 +35,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
 
     public String visit(NodeListOptional n, MType env) {
         if (n.present()) {
-            StringBuilder b = new StringBuilder("");
+            StringBuilder b = new StringBuilder("\n");
             for (Enumeration<Node> e = n.elements(); e.hasMoreElements(); ) {
                 b.append(e.nextElement().accept(this, env));
             }
@@ -46,7 +46,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
     }
 
     public String visit(NodeSequence n, MType env) {
-        StringBuilder b = new StringBuilder("");
+        StringBuilder b = new StringBuilder("\n");
         for (Enumeration<Node> e = n.elements(); e.hasMoreElements(); ) {
             b.append(e.nextElement().accept(this, env));
         }
@@ -71,7 +71,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         String Code = n.f15.accept(this, methodEnv);
         String head = "MAIN\n", tail = "END\n";
         UsedTemp -= methodEnv.otherLocalVars.size();
-        return head + Code + tail;
+        return head + Code + '\n' + tail;
         //
         //  MAIN
         //      ***
@@ -115,7 +115,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
     }
 
     public String visit(Statement n, MType env) {
-        return n.f0.accept(this, env) + "\n";
+        return n.f0.accept(this, env);
     }
 
     public String visit(Block n, MType env) {
@@ -126,7 +126,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         MMethod methodEnv = (MMethod) env;
         MVar var = methodEnv.queryVar(n.f0.accept(this, env));
         int offSet = getOffSet(methodEnv, var);
-        return String.format("MOVE TEMP %d ", offSet) + n.f2.accept(this, env) + "\n";
+        return String.format("MOVE TEMP %d ", offSet) + n.f2.accept(this, env);
     }
 
     public String visit(ArrayAssignmentStatement n, MType env) {
@@ -134,8 +134,8 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         MVar var = methodEnv.queryVar(n.f0.accept(this, env));
         int offSet = getOffSet(methodEnv, var);
         ++UsedTemp;
-        String getAddr = String.format("MOVE TEMP %d PLUS TEMP %d TIMES 4 %s\n", UsedTemp - 1, offSet, n.f2.accept(this, env));
-        String ret = String.format("HSTORE %s 0 %s\n", getAddr, n.f5.accept(this, env));
+        String getAddr = String.format("MOVE TEMP %d PLUS TEMP %d TIMES 4 %s", UsedTemp - 1, offSet, n.f2.accept(this, env));
+        String ret = String.format("%s\nHSTORE TEMP %d 0 %s", getAddr, UsedTemp - 1, n.f5.accept(this, env));
         --UsedTemp;
         return ret;
     }
@@ -144,14 +144,14 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         String C1 = String.format("L%d", UsedLabel++);
         String C2 = String.format("L%d", UsedLabel++);
         String Comp = String.format("CJUMP LT %s 1 %s", n.f2.accept(this, env), C2);
-        return String.format("%s\n%s\nJUMP %s\n%s\n%s\n%s\n", Comp, n.f4.accept(this, env), C1, C2, n.f6.accept(this, env), C1);
+        return String.format("%s\n%s\nJUMP %s\n%s\n%s\n%s", Comp, n.f4.accept(this, env), C1, C2, n.f6.accept(this, env), C1);
     }
 
     public String visit(WhileStatement n, MType env) {
         String in = String.format("L%d", UsedLabel++);
         String out = String.format("L%d", UsedLabel++);
         String Comp = String.format("CJUMP LT %s 1 %s", n.f2.accept(this, env), out);
-        return String.format("%s\n%s\n%s\nJUMP %s\n%s\n", in, Comp, n.f4.accept(this, env), in, out);
+        return String.format("%s\n%s\n%s\nJUMP %s\n%s", in, Comp, n.f4.accept(this, env), in, out);
     }
 
     public String visit(PrintStatement n, MType env) {
