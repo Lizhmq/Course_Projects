@@ -9,6 +9,8 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
 
     int UsedLabel = 0;
 
+    int base = 20;
+
     int getOffSet(MMethod method, MVar var) {
         int i;
         boolean found = false;
@@ -22,7 +24,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
             System.out.println(String.format("method %s doesn't have %s", method.name, var.name));
             System.exit(0);
         }
-        return UsedTemp + i - method.otherLocalVars.size();
+        return base + i;
     }
 
     public String visit(NodeList n, MType env) {
@@ -67,10 +69,12 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         MClasses global = (MClasses) env;
         MClass classEnv = global.queryClass(mainClassName);
         MMethod methodEnv = classEnv.queryMethod("main");
+        base = UsedTemp;
         UsedTemp += methodEnv.otherLocalVars.size();
         String Code = n.f15.accept(this, methodEnv);
         String head = "MAIN\n", tail = "END\n";
-        UsedTemp -= methodEnv.otherLocalVars.size();
+        //UsedTemp -= methodEnv.otherLocalVars.size();
+        UsedTemp = base;
         return head + Code + '\n' + tail;
         //
         //  MAIN
@@ -133,11 +137,12 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         MMethod methodEnv = (MMethod) env;
         MVar var = methodEnv.queryVar(n.f0.accept(this, env));
         int offSet = getOffSet(methodEnv, var);
+        int desid = UsedTemp;
         ++UsedTemp;
-        String getAddr = String.format("MOVE TEMP %d PLUS TEMP %d TIMES 4 %s", UsedTemp - 1, offSet, n.f2.accept(this, env));
-        String ret = String.format("%s\nHSTORE TEMP %d 0 %s", getAddr, UsedTemp - 1, n.f5.accept(this, env));
+        String getAddr = String.format("MOVE TEMP %d PLUS TEMP %d TIMES 4 PLUS %s 1\n", desid, offSet, n.f2.accept(this, env));
+        String ret = String.format("HSTORE TEMP %d 0 %s", desid, n.f5.accept(this, env));
         --UsedTemp;
-        return ret;
+        return getAddr + ret;
     }
     
     public String visit(IfStatement n, MType env) {
@@ -185,19 +190,18 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
 
     public String visit(ArrayLookup n, MType env) {
         String head = "BEGIN\n";
-        String tail = "END\n";
-        String getAddr = String.format("PLUS %s TIMES 4 %s\n", n.f0.accept(this, env), n.f2.accept(this, env));
+        String tail = "END";
         ++UsedTemp;
-        String getValue = String.format("HLOAD TEMP %d %s 0\n", UsedTemp - 1, getAddr);
-        String retValue = String.format("RETURN TEMP %d\n", --UsedTemp);
-        return head + getValue + retValue + tail;
+        String getAddr = String.format("MOVE TEMP %d PLUS %s TIMES 4 PLUS %s 1\n", UsedTemp - 1, n.f0.accept(this, env), n.f2.accept(this, env));
+        String getValue = String.format("HLOAD TEMP %d TEMP %d 0\n", UsedTemp, UsedTemp - 1);
+        String retValue = String.format("RETURN TEMP %d\n", UsedTemp--);
+        return head + getAddr + getValue + retValue + tail;
     }
 
     public String visit(ArrayLength n, MType env) {
-        ++UsedTemp;
-        String getValue = String.format("HLOAD TEMP %d %s 0\n", UsedTemp - 1, n.f0.accept(this, env));
+        String getValue = String.format("HLOAD TEMP %d %s 0\n", UsedTemp++, n.f0.accept(this, env));
         String retValue = String.format("RETURN TEMP %d\n", --UsedTemp);
-        return String.format("BEGIN\n%s%sEND\n", getValue, retValue);
+        return String.format("BEGIN\n%s%sEND", getValue, retValue);
     }
 
     public String visit(MessageSend n, MType env) {
@@ -229,6 +233,11 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         if (var != null) {
             return String.format("TEMP %d", getOffSet(method, var));
         }
+        MClass classEnv = method.owner;
+        if (classEnv.queryVar(ret) != null) {
+            // get class variable address by this pointer in TEMP 0
+            // return TEMP 0 + certain offset
+        }
         return ret;
     }
 
@@ -253,9 +262,16 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
     }
 
     public String visit(ArrayAllocationExpression n, MType env) {
-        String getSize = String.format("PLUS 4 TIMES 4 %s", n.f3.accept(this, env));
-        String getAddr = String.format("HALLOCATE %s", getSize);
-        return getAddr;
+        String head = "BEGIN\n";
+        String tail = "END";
+        int sizeTemp = UsedTemp++;
+        String getSize = String.format("MOVE TEMP %d TIMES 4 %s\n", sizeTemp, n.f3.accept(this, env));
+        int addrTemp = UsedTemp++;
+        String getAddr = String.format("MOVE TEMP %d HALLOCATE PLUS 4 TEMP %d\n", addrTemp, sizeTemp);
+        String setLen = String.format("HSTORE TEMP %d 0 TEMP %d\n", addrTemp, sizeTemp);
+        String ret = String.format("RETURN TEMP %d\n", addrTemp);
+        UsedTemp -= 2;
+        return head + getSize + getAddr + setLen + ret + tail;
     }
 
     public String visit(AllocationExpression n, MType env) {
