@@ -11,6 +11,8 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
 
     int base = 20;
 
+    MClasses global;
+
     int getOffSet(MMethod method, MVar var) {
         int i;
         boolean found = false;
@@ -66,7 +68,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         // we only need to deal with Statement
         //
         String mainClassName = n.f1.accept(this, env);
-        MClasses global = (MClasses) env;
+        this.global = (MClasses) env;
         MClass classEnv = global.queryClass(mainClassName);
         MMethod methodEnv = classEnv.queryMethod("main");
         base = UsedTemp;
@@ -89,7 +91,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
 
     public String visit(ClassDeclaration n, MType env) {
         String className = n.f1.accept(this, env);
-        MClasses global = (MClasses) env;
+        this.global = (MClasses) env;
         MClass classEnv = global.queryClass(className);
         String Code = n.f4.accept(this, classEnv);
         return Code;
@@ -97,7 +99,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
 
     public String visit(ClassExtendsDeclaration n, MType env) {
         String className = n.f1.accept(this, env);
-        MClasses global = (MClasses) env;
+        this.global = (MClasses) env;
         MClass classEnv = global.queryClass(className);
         String Code = n.f6.accept(this, classEnv);
         return Code;
@@ -209,6 +211,25 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         // find method entry of this object
         // calculate parameters
         // call the func
+        String ret = "";
+        int ObjecttableTemp = UsedTemp++;
+        int MethodtableTemp = UsedTemp++;
+        int MethodTemp = UsedTemp++;
+        ret += "CALL\n";
+        ret += String.format("BEGIN\nMOVE TEMP %d %s\n", ObjecttableTemp, n.f1.accept(this, env));
+        ret += String.format("HLOAD TEMP %d TEMP %d 0\n", MethodtableTemp, ObjecttableTemp);
+        String className = n.f0.accept(this, env);
+        MClass c = this.global.queryClass(className);
+        String methodName = n.f2.accept(this, env);
+        int i = 0;
+        Enumeration method = c.memberMethods.keys();
+        while (c.memberMethods.get(method.nextElement()).name != methodName)
+            i += 1;
+        ret += String.format("HLOAD TEMP %d TEMP %d 0\n", MethodTemp, MethodtableTemp, i);
+        ret += String.format("RETURN TEMP %d\n", MethodTemp);
+        String args = n.f4.accept(this, env);
+        ret += String.format("END\n(TEMP %d%s)", ObjecttableTemp, args == "" ? "" : " " + args);
+        UsedTemp -= 2;
         return "";
     }
 
@@ -278,7 +299,31 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         //  check what class type
         //  construct DTable and VTable
         //  return addr of DTable
-        return "";
+        String ret = "";
+        int ObjecttableTemp = UsedTemp++;
+        int MethodtableTemp = UsedTemp++;
+        // ret += String.format("MOVE TEMP %d\n", ObjecttableTemp);
+        ret += "BEGIN\n";
+        String className = n.f1.accept(this, env);
+        MClass c = this.global.queryClass(className);
+        Enumeration methods = c.memberMethods.keys();
+        int methodSize = c.memberMethods.size();
+        ret += String.format("MOVE TEMP %d HALLOCATE %d\n", MethodtableTemp, methodSize * 4);
+        for (int i = 0; i < methodSize; ++i) {
+            MMethod method = c.memberMethods.get(methods.nextElement());
+            ret += String.format("HSTORE TEMP %d %d %s_%s\n",
+                                 MethodtableTemp, 4 * i, c.name, method.name);
+        }
+        Enumeration vars = c.memberVars.keys();
+        int varSize = c.memberVars.size();
+        ret += String.format("MOVE TEMP %d HALLOCATE %d\n", ObjecttableTemp, varSize * 4 + 4);
+        for (int i = 1; i <= varSize; ++i) {
+            ret += String.format("HSTORE TEMP %d %d 0\n", ObjecttableTemp, 4 * i);
+        }
+        ret += String.format("HSTORE TEMP %d 0 TEMP %d\n", ObjecttableTemp, MethodtableTemp);
+        ret += String.format("RETURN TEMP %d\nEND", ObjecttableTemp);
+        UsedTemp -= 2;
+        return ret;
     }
 
     public String visit(NotExpression n, MType env) {
