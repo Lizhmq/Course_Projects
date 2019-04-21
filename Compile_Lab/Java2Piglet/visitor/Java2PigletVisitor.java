@@ -30,18 +30,22 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
     }
 
     public String visit(NodeList n, MType env) {
-        StringBuilder b = new StringBuilder("\n");
+        StringBuilder b = new StringBuilder("");
         for (Enumeration<Node> e = n.elements(); e.hasMoreElements(); ) {
             b.append(e.nextElement().accept(this, env));
+            if (e.hasMoreElements())
+                b.append("\n");
         }
         return b.toString();
     }
 
     public String visit(NodeListOptional n, MType env) {
         if (n.present()) {
-            StringBuilder b = new StringBuilder("\n");
+            StringBuilder b = new StringBuilder("");
             for (Enumeration<Node> e = n.elements(); e.hasMoreElements(); ) {
                 b.append(e.nextElement().accept(this, env));
+                if (e.hasMoreElements())
+                    b.append("\n");
             }
             return b.toString();
         } else {
@@ -50,9 +54,11 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
     }
 
     public String visit(NodeSequence n, MType env) {
-        StringBuilder b = new StringBuilder("\n");
+        StringBuilder b = new StringBuilder("");
         for (Enumeration<Node> e = n.elements(); e.hasMoreElements(); ) {
             b.append(e.nextElement().accept(this, env));
+            if (e.hasMoreElements())
+                b.append("\n");
         }
         return b.toString();
     }
@@ -94,7 +100,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         this.global = (MClasses) env;
         MClass classEnv = global.queryClass(className);
         String Code = n.f4.accept(this, classEnv);
-        return Code;
+        return Code + "\n\n";
     }
 
     public String visit(ClassExtendsDeclaration n, MType env) {
@@ -102,7 +108,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         this.global = (MClasses) env;
         MClass classEnv = global.queryClass(className);
         String Code = n.f6.accept(this, classEnv);
-        return Code;
+        return Code + "\n\n";
     }
 
     public String visit(MethodDeclaration n, MType env) {
