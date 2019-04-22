@@ -73,7 +73,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         //
         // we only need to deal with Statement
         //
-        String mainClassName = n.f1.accept(this, env);
+        String mainClassName = n.f1.f0.toString();
         this.global = (MClasses) env;
         MClass classEnv = global.queryClass(mainClassName);
         MMethod methodEnv = classEnv.queryMethod("main");
@@ -96,7 +96,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
     }
 
     public String visit(ClassDeclaration n, MType env) {
-        String className = n.f1.accept(this, env);
+        String className = n.f1.f0.toString();
         this.global = (MClasses) env;
         MClass classEnv = global.queryClass(className);
         String Code = n.f4.accept(this, classEnv);
@@ -104,7 +104,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
     }
 
     public String visit(ClassExtendsDeclaration n, MType env) {
-        String className = n.f1.accept(this, env);
+        String className = n.f1.f0.toString();
         this.global = (MClasses) env;
         MClass classEnv = global.queryClass(className);
         String Code = n.f6.accept(this, classEnv);
@@ -112,7 +112,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
     }
 
     public String visit(MethodDeclaration n, MType env) {
-        String methodName = n.f2.accept(this, env);
+        String methodName = n.f2.f0.toString();
         MClass classEnv = (MClass) env;
         String className = classEnv.name;
         MMethod methodEnv = classEnv.queryMethod(methodName);
@@ -136,14 +136,14 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
 
     public String visit(AssignmentStatement n, MType env) {
         MMethod methodEnv = (MMethod) env;
-        MVar var = methodEnv.queryVar(n.f0.accept(this, env));
+        MVar var = methodEnv.queryVar(n.f0.f0.toString());
         int offSet = getOffSet(methodEnv, var);
         return String.format("MOVE TEMP %d ", offSet) + n.f2.accept(this, env);
     }
 
     public String visit(ArrayAssignmentStatement n, MType env) {
         MMethod methodEnv = (MMethod) env;
-        MVar var = methodEnv.queryVar(n.f0.accept(this, env));
+        MVar var = methodEnv.queryVar(n.f0.f0.toString());
         int offSet = getOffSet(methodEnv, var);
         int desid = UsedTemp;
         ++UsedTemp;
@@ -222,12 +222,13 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         int MethodtableTemp = UsedTemp++;
         int MethodTemp = UsedTemp++;
         ret += "CALL\n";
-        ret += String.format("BEGIN\nMOVE TEMP %d %s\n", ObjecttableTemp, n.f1.accept(this, env));
+        ret += String.format("BEGIN\nMOVE TEMP %d %s\n", ObjecttableTemp, n.f0.accept(this, env));
         ret += String.format("HLOAD TEMP %d TEMP %d 0\n", MethodtableTemp, ObjecttableTemp);
-        String className = n.f0.accept(this, env);
-        // System.out.println(String.format("ClassName: %s", className));
+        TypeVisitor v = new TypeVisitor(global);
+        String className = n.f0.accept(v, env);
         MClass c = this.global.queryClass(className);
-        String methodName = n.f2.accept(this, env);
+        // System.out.println(String.format("ClassName: %s", className));
+        String methodName = n.f2.f0.toString();
         int i = 0;
         Enumeration method = c.memberMethods.keys();
         while (c.memberMethods.get(method.nextElement()).name != methodName)
@@ -236,8 +237,8 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         ret += String.format("RETURN TEMP %d\n", MethodTemp);
         String args = n.f4.accept(this, env);
         ret += String.format("END\n(TEMP %d%s)", ObjecttableTemp, args == "" ? "" : " " + args);
-        UsedTemp -= 2;
-        return "";
+        UsedTemp -= 3;
+        return ret;
     }
 
     public String visit(ExpressionList n, MType env) {
@@ -265,6 +266,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         if (classEnv.queryVar(ret) != null) {
             // get class variable address by this pointer in TEMP 0
             // return TEMP 0 + certain offset
+            
         }
         return ret;
     }
@@ -311,7 +313,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         int MethodtableTemp = UsedTemp++;
         // ret += String.format("MOVE TEMP %d\n", ObjecttableTemp);
         ret += "BEGIN\n";
-        String className = n.f1.accept(this, env);
+        String className = n.f1.f0.toString();
         MClass c = this.global.queryClass(className);
         Enumeration methods = c.memberMethods.keys();
         int methodSize = c.memberMethods.size();
