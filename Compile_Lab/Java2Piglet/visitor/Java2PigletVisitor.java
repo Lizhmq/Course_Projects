@@ -1,5 +1,4 @@
 package visitor;
-import java.security.acl.Owner;
 import java.util.*;
 import syntaxtree.*;
 import symbol.*;
@@ -183,16 +182,16 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
     public String visit(IfStatement n, MType env) {
         String C1 = String.format("L%d", UsedLabel++);
         String C2 = String.format("L%d", UsedLabel++);
-        String Comp = String.format("CJUMP LT %s 1 %s", n.f2.accept(this, env), C2);
-        return String.format("%s\n%s\nJUMP %s\n%s\n%s\n%s", Comp, n.f4.accept(this, env), C1, C2, n.f6.accept(this, env), C1);
+        String Comp = String.format("CJUMP LT 0 %s %s", n.f2.accept(this, env), C2);
+        return String.format("%s\n%s\nJUMP %s\n%s\n%s\n%s NOOP\n", Comp, n.f4.accept(this, env), C1, C2, n.f6.accept(this, env), C1);
     }
 
     // **** test
     public String visit(WhileStatement n, MType env) {
         String in = String.format("L%d", UsedLabel++);
         String out = String.format("L%d", UsedLabel++);
-        String Comp = String.format("CJUMP LT %s 1 %s", n.f2.accept(this, env), out);
-        return String.format("%s\n%s\n%s\nJUMP %s\n%s", in, Comp, n.f4.accept(this, env), in, out);
+        String Comp = String.format("CJUMP LT 0 %s %s", n.f2.accept(this, env), out);
+        return String.format("%s\n%s\n%s\nJUMP %s\n%s NOOP\n", in, Comp, n.f4.accept(this, env), in, out);
     }
 
     public String visit(PrintStatement n, MType env) {
@@ -261,7 +260,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         Enumeration method = c.memberMethods.keys();
         while (c.memberMethods.get(method.nextElement()).name != methodName)
             i += 1;
-        ret += String.format("HLOAD TEMP %d TEMP %d 0\n", MethodTemp, MethodtableTemp, i);
+        ret += String.format("HLOAD TEMP %d TEMP %d %d\n", MethodTemp, MethodtableTemp, i * 4);
         ret += String.format("RETURN TEMP %d\n", MethodTemp);
         String args = n.f4.accept(this, env);
         ret += String.format("END\n(TEMP %d%s)", ObjecttableTemp, args == "" ? "" : " " + args);

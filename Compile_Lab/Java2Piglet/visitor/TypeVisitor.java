@@ -77,8 +77,19 @@ public class TypeVisitor extends GJDepthFirst<String, MType> {
                 return "int";
         }
         public String visit(MessageSend n, MType env) {
-                MClass c = global.queryClass(n.f0.accept(this, env));
-                MMethod method = c.queryMethod(n.f2.toString());
+                String className = n.f0.accept(this, env);
+                //System.out.println("class type: " + className);
+                MClass c = global.queryClass(className);
+                if (c == null) {
+                        System.out.println("Unknown class type.");
+                        System.exit(0);
+                }
+                MMethod method = c.queryMethod(((Identifier)n.f2).f0.toString());
+                //System.out.println("method name: " + ((Identifier)n.f2).f0.toString());
+                if (method == null) {
+                        System.out.println("Unknown method name.");
+                        System.exit(0);
+                }
                 return method.returnType;
         }
 }
