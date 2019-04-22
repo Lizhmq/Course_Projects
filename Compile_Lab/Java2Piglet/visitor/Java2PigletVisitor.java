@@ -80,7 +80,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         base = UsedTemp;
         UsedTemp += methodEnv.otherLocalVars.size();
         String Code = n.f15.accept(this, methodEnv);
-        String head = "MAIN\n", tail = "END\n";
+        String head = "MAIN\n", tail = "END\n\n";
         //UsedTemp -= methodEnv.otherLocalVars.size();
         UsedTemp = base;
         return head + Code + '\n' + tail;
@@ -117,7 +117,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         String className = classEnv.name;
         MMethod methodEnv = classEnv.queryMethod(methodName);
         int param = methodEnv.params.size();
-        String head = String.format("%s_%s [%d]\nBEGIN\n", className, methodName, param);
+        String head = String.format("%s_%s [%d]\nBEGIN\n", className, methodName, param + 1);
         String tail = "END";
         UsedTemp += methodEnv.otherLocalVars.size();
         String code = n.f8.accept(this, methodEnv);
@@ -225,6 +225,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         ret += String.format("BEGIN\nMOVE TEMP %d %s\n", ObjecttableTemp, n.f1.accept(this, env));
         ret += String.format("HLOAD TEMP %d TEMP %d 0\n", MethodtableTemp, ObjecttableTemp);
         String className = n.f0.accept(this, env);
+        // System.out.println(String.format("ClassName: %s", className));
         MClass c = this.global.queryClass(className);
         String methodName = n.f2.accept(this, env);
         int i = 0;
