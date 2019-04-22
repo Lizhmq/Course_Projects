@@ -1,4 +1,5 @@
 package visitor;
+import java.security.acl.Owner;
 import java.util.*;
 import syntaxtree.*;
 import symbol.*;
@@ -134,25 +135,51 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         return n.f1.accept(this, env);
     }
 
+    // **** queryVar
     public String visit(AssignmentStatement n, MType env) {
-        MMethod methodEnv = (MMethod) env;
-        MVar var = methodEnv.queryVar(n.f0.f0.toString());
-        int offSet = getOffSet(methodEnv, var);
-        return String.format("MOVE TEMP %d ", offSet) + n.f2.accept(this, env);
+        // MMethod methodEnv = (MMethod) env;
+        // MVar var = methodEnv.queryVar(n.f0.f0.toString());
+        // String id = n.f0.accept(this, env);
+        // int offSet = getOffSet(methodEnv, var);
+        MMethod method = (MMethod)env;
+        String id = n.f0.f0.toString();
+        for (int i = 0; i < method.params.size(); ++i) {
+            if (method.params.get(i).name.equals(id)) {
+                // return String.format("MOVE TEMP %d %s", i + 1, n.f2.accept(this, env);
+                return String.format("MOVE %s %s", n.f0.accept(this, env), n.f2.accept(this, env));
+            }
+        }
+        if (method.varsTable.containsKey(id))
+            return String.format("MOVE %s %s", n.f0.accept(this, env), n.f2.accept(this, env));
+        MClass classEnv = method.owner;
+        if (classEnv.queryVar(id) != null) {
+            // get class variable address by this pointer in TEMP 0
+            // return TEMP 0 + certain offset
+            MClass c = ((MMethod)env).owner;
+            Enumeration vars = c.memberVars.keys();
+            int i = 0;
+            while (c.memberVars.get(vars.nextElement()).name != id)
+                i = i + 1;
+            return String.format("HSTORE TEMP 0 %d %s", 4 * (i + 1), n.f2.accept(this, env));
+        }
+        return "\n\n??? in visit Assignment\n\n";
     }
 
+    // **** queryVar
     public String visit(ArrayAssignmentStatement n, MType env) {
-        MMethod methodEnv = (MMethod) env;
-        MVar var = methodEnv.queryVar(n.f0.f0.toString());
-        int offSet = getOffSet(methodEnv, var);
+        // MMethod methodEnv = (MMethod) env;
+        // MVar var = methodEnv.queryVar(n.f0.f0.toString());
+        String id = n.f0.accept(this, env);
+        // int offSet = getOffSet(methodEnv, var);
         int desid = UsedTemp;
         ++UsedTemp;
-        String getAddr = String.format("MOVE TEMP %d PLUS TEMP %d TIMES 4 PLUS %s 1\n", desid, offSet, n.f2.accept(this, env));
+        String getAddr = String.format("MOVE TEMP %d PLUS %s TIMES 4 PLUS %s 1\n", desid, id, n.f2.accept(this, env));
         String ret = String.format("HSTORE TEMP %d 0 %s", desid, n.f5.accept(this, env));
         --UsedTemp;
         return getAddr + ret;
     }
     
+    // **** test
     public String visit(IfStatement n, MType env) {
         String C1 = String.format("L%d", UsedLabel++);
         String C2 = String.format("L%d", UsedLabel++);
@@ -160,6 +187,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         return String.format("%s\n%s\nJUMP %s\n%s\n%s\n%s", Comp, n.f4.accept(this, env), C1, C2, n.f6.accept(this, env), C1);
     }
 
+    // **** test
     public String visit(WhileStatement n, MType env) {
         String in = String.format("L%d", UsedLabel++);
         String out = String.format("L%d", UsedLabel++);
@@ -250,25 +278,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
     }
 
     public String visit(PrimaryExpression n, MType env) {
-        String ret = n.f0.accept(this, env);
-        MMethod method = (MMethod) env;
-        int i = 0;
-        for (; i < method.params.size(); ++i) {
-            if (method.params.get(i).name.equals(ret)) {
-                return String.format("TEMP %d", i + 1);
-            }
-        }
-        MVar var = method.queryVar(ret);
-        if (var != null) {
-            return String.format("TEMP %d", getOffSet(method, var));
-        }
-        MClass classEnv = method.owner;
-        if (classEnv.queryVar(ret) != null) {
-            // get class variable address by this pointer in TEMP 0
-            // return TEMP 0 + certain offset
-            
-        }
-        return ret;
+        return n.f0.accept(this, env);    
     }
 
     public String visit(IntegerLiteral n, MType env) {
@@ -284,7 +294,31 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
     }
 
     public String visit(Identifier n, MType env) {
-        return n.f0.toString();
+        String id = n.f0.toString();
+        MMethod method = (MMethod)env;
+        int i = 0;
+        for (; i < method.params.size(); ++i) {
+            if (method.params.get(i).name.equals(id)) {
+                return String.format("TEMP %d", i + 1);
+            }
+        }
+        MVar var = method.queryVar(id);
+        if (method.varsTable.containsKey(id)) {
+            return String.format("TEMP %d", getOffSet(method, var));
+        }
+        MClass classEnv = method.owner;
+        if (classEnv.queryVar(id) != null) {
+            // get class variable address by this pointer in TEMP 0
+            // return TEMP 0 + certain offset
+            MClass c = ((MMethod)env).owner;
+            Enumeration vars = c.memberVars.keys();
+            i = 0;
+            while (c.memberVars.get(vars.nextElement()).name != id)
+                i = i + 1;
+            int returnTemp = UsedTemp;
+            return String.format("BEGIN\nHLOAD TEMP %d TEMP 0 %d\nRETURN TEMP %d\nEND", returnTemp, 4 * (i + 1), returnTemp);
+        }
+        return "\n\n??? in visit Identifier\n\n";
     }
 
     public String visit(ThisExpression n, MType env) {

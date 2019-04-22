@@ -28,7 +28,15 @@ public class TypeVisitor extends GJDepthFirst<String, MType> {
                 return "boolean";
         }
         public String visit(Identifier n, MType env) {
-                return n.f0.toString();
+                String id = n.f0.toString();
+                if (global.queryClass(id) != null)
+                        return id;
+                MMethod method = (MMethod)env;
+                MVar var = method.queryVar(id);
+                if (var != null)
+                        return var.varType;
+                var = method.owner.queryVar(id);
+                return var.varType;
         }
         public String visit(ThisExpression n, MType env) {
                 MMethod method = (MMethod)env;
@@ -42,7 +50,7 @@ public class TypeVisitor extends GJDepthFirst<String, MType> {
                 return "int[]";
         }
         public String visit(AllocationExpression n, MType env) {
-                return n.f1.f0.toString();
+                return n.f1.accept(this, env);
         }
         public String visit(Expression n, MType env) {
                 return n.f0.accept(this, env);
