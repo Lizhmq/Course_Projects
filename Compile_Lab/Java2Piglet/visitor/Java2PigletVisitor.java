@@ -13,6 +13,97 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
 
     MClasses global;
 
+    HashMap<String, Integer> varNum = new HashMap<String, Integer>();
+
+    HashMap<String, Integer> methodNum = new HashMap<String, Integer>();
+
+    HashMap<String, HashMap<String, Integer> > VarOffset = new HashMap<String, HashMap<String, Integer> >();
+
+    HashMap<String, HashMap<String, Integer> > MethodOffset = new HashMap<String, HashMap<String, Integer> >();
+
+    void createEntry(String str) {
+
+        if (VarOffset.get(str) != null) {
+            return;
+        }
+
+        HashMap<String, Integer> varOfs;
+        HashMap<String, Integer> methodOfs;
+
+        MClass classEnv = global.queryClass(str);
+
+        if (classEnv.superClassName != null) {
+            createEntry(classEnv.superClassName);
+            HashMap<String, Integer> superVarOfs = VarOffset.get(classEnv.superClassName);
+            HashMap<String, Integer> superMethodOfs = MethodOffset.get(classEnv.superClassName);
+            varOfs = new HashMap<String, Integer>(superVarOfs);
+            methodOfs = new HashMap<String, Integer>(superMethodOfs);
+        } else {
+            varOfs = new HashMap<String, Integer>();
+            methodOfs = new HashMap<String, Integer>();
+        }
+
+        int vars = (int)(varNum.get(str)), methods = (int)(methodNum.get(str);
+        for (String varName : classEnv.memberVars.keySet()) {
+            ++vars;
+            varOfs.put(varName, 4 * vars);
+        }
+        for (String methodName : classEnv.memberMethods.keySet()) {
+            if (methodOfs.containsKey(methodName)) {
+                continue;
+            }
+            methodOfs.put(methodName, 4 * methods);
+            ++methods;
+        }
+
+        VarOffset.put(str, varOfs);
+        MethodOffset.put(str, methodOfs);
+        varNum.put(str, varOfs.size());
+        methodNum.put(str, methodOfs.size());
+
+    }
+
+    int getVarOffset(String className, String varName) {
+        HashMap varMap = (HashMap) (VarOffset.get(className));
+        if (varMap.get(varName) != null) {
+            return (int)varMap.get(varName);
+        } else {
+            System.out.println(String.format("Class: %s, var: %s  not found.", className, varName));
+            System.exit(0);
+            return -1;
+        }
+    }
+
+    int getMethodOffset(String className, String methodName) {
+        HashMap<String, Integer> methodMap = (MethodOffset.get(className));
+        if (methodMap.get(methodName) != null) {
+            return (int)methodMap.get(methodName);
+        } else {
+            System.out.println(String.format("Class: %s, method: %s  not found.", className, methodName));
+            System.exit(0);
+            return -1;
+        }
+    }
+
+    void SetHashMap() {
+        global.classesTable.keySet().forEach(
+            str -> {createEntry(str);}
+        );
+        // global.classesTable.keySet().forEach(
+        //     str -> {
+        //         HashMap vMap = (HashMap)VarOffset.get(str);
+        //         HashMap mMap = (HashMap)MethodOffset.get(str);
+        //         System.out.println(String.format("Class: %s", str));
+        //         for (Object o : vMap.keySet()) {
+        //             System.out.println(String.format("\t\t%s", (String)o));
+        //         }
+        //         for (Object o : mMap.keySet()) {
+        //             System.out.println(String.format("\t%s", (String)o));
+        //         }
+        //     }
+        // );
+    }
+
     int getOffSet(MMethod method, MVar var) {
         int i;
         boolean found = false;
@@ -75,6 +166,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         //
         String mainClassName = n.f1.f0.toString();
         this.global = (MClasses) env;
+        SetHashMap();
         MClass classEnv = global.queryClass(mainClassName);
         MMethod methodEnv = classEnv.queryMethod("main");
         base = UsedTemp;
@@ -151,15 +243,27 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         if (method.varsTable.containsKey(id))
             return String.format("MOVE %s %s", n.f0.accept(this, env), n.f2.accept(this, env));
         MClass classEnv = method.owner;
-        if (classEnv.queryVar(id) != null) {
+        // if (classEnv.queryVar(id) != null) {
+        int offset = getVarOffset(classEnv.name, id);
+        if (offset > 0) {
             // get class variable address by this pointer in TEMP 0
             // return TEMP 0 + certain offset
-            MClass c = ((MMethod)env).owner;
-            Enumeration vars = c.memberVars.keys();
-            int i = 0;
-            while (c.memberVars.get(vars.nextElement()).name != id)
-                i = i + 1;
-            return String.format("HSTORE TEMP 0 %d %s", 4 * (i + 1), n.f2.accept(this, env));
+            // System.out.println("Found class var: " + id);
+            // Enumeration vars = classEnv.memberVars.keys();
+            // int i = 0;
+            // String ccc;
+            // while (true) {
+            //     if (!vars.hasMoreElements()) {
+            //         System.out.println("class var set of " + classEnv.name + " didn't find " + id);
+            //         System.exit(0);
+            //     }
+            //     ccc = vars.nextElement().toString();
+            //     if (ccc.equals(id)) {
+            //         break;
+            //     }
+            //     ++i;
+            // }
+            return String.format("HSTORE TEMP 0 %d %s", offset, n.f2.accept(this, env));
         }
         return "\n\n??? in visit Assignment\n\n";
     }
@@ -256,11 +360,12 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         MClass c = this.global.queryClass(className);
         // System.out.println(String.format("ClassName: %s", className));
         String methodName = n.f2.f0.toString();
-        int i = 0;
-        Enumeration method = c.memberMethods.keys();
-        while (c.memberMethods.get(method.nextElement()).name != methodName)
-            i += 1;
-        ret += String.format("HLOAD TEMP %d TEMP %d %d\n", MethodTemp, MethodtableTemp, i * 4);
+        // int i = 0;
+        // Enumeration method = c.memberMethods.keys();
+        // while (c.memberMethods.get(method.nextElement()).name != methodName)
+        //     i += 1;
+        int offset = getMethodOffset(className, methodName);
+        ret += String.format("HLOAD TEMP %d TEMP %d %d\n", MethodTemp, MethodtableTemp, offset);
         ret += String.format("RETURN TEMP %d\n", MethodTemp);
         String args = n.f4.accept(this, env);
         ret += String.format("END\n(TEMP %d%s)", ObjecttableTemp, args == "" ? "" : " " + args);
@@ -306,16 +411,18 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
             return String.format("TEMP %d", getOffSet(method, var));
         }
         MClass classEnv = method.owner;
-        if (classEnv.queryVar(id) != null) {
+        int offset = getVarOffset(classEnv.name, id);
+        //if (classEnv.queryVar(id) != null) {
+        if (offset > 0) {
             // get class variable address by this pointer in TEMP 0
             // return TEMP 0 + certain offset
-            MClass c = ((MMethod)env).owner;
-            Enumeration vars = c.memberVars.keys();
-            i = 0;
-            while (c.memberVars.get(vars.nextElement()).name != id)
-                i = i + 1;
+            // MClass c = ((MMethod)env).owner;
+            // Enumeration vars = c.memberVars.keys();
+            // i = 0;
+            // while (c.memberVars.get(vars.nextElement()).name != id)
+            //     i = i + 1;
             int returnTemp = UsedTemp;
-            return String.format("BEGIN\nHLOAD TEMP %d TEMP 0 %d\nRETURN TEMP %d\nEND", returnTemp, 4 * (i + 1), returnTemp);
+            return String.format("BEGIN\nHLOAD TEMP %d TEMP 0 %d\nRETURN TEMP %d\nEND", returnTemp, offset, returnTemp);
         }
         return "\n\n??? in visit Identifier\n\n";
     }
@@ -347,17 +454,30 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         // ret += String.format("MOVE TEMP %d\n", ObjecttableTemp);
         ret += "BEGIN\n";
         String className = n.f1.f0.toString();
-        MClass c = this.global.queryClass(className);
-        Enumeration methods = c.memberMethods.keys();
-        int methodSize = c.memberMethods.size();
+        // MClass c = this.global.queryClass(className);
+        // Enumeration methods = c.memberMethods.keys();
+        // int methodSize = c.memberMethods.size();
+        int methodSize = (int)methodNum.get(className);
         ret += String.format("MOVE TEMP %d HALLOCATE %d\n", MethodtableTemp, methodSize * 4);
-        for (int i = 0; i < methodSize; ++i) {
-            MMethod method = c.memberMethods.get(methods.nextElement());
+        HashMap methods = (HashMap)MethodOffset.get(className);
+        // for (int i = 0; i < methodSize; ++i) {
+        //     MMethod method = c.memberMethods.get(methods.nextElement());
+        //     ret += String.format("HSTORE TEMP %d %d %s_%s\n",
+        //                          MethodtableTemp, 4 * i, c.name, method.name);
+        // }
+        for (Object o : methods.keySet()) {
+            String methodName = (String) o;
+            int offset = getMethodOffset(className, methodName);
+            String cstr = className;
+            while (global.queryClass(className).queryMethod(methodName) == null) {
+                cstr = global.queryClass(className).superClassName;
+            }
             ret += String.format("HSTORE TEMP %d %d %s_%s\n",
-                                 MethodtableTemp, 4 * i, c.name, method.name);
+                                MethodtableTemp, offset, cstr, methodName);
         }
-        Enumeration vars = c.memberVars.keys();
-        int varSize = c.memberVars.size();
+        // Enumeration vars = c.memberVars.keys();
+        // int varSize = c.memberVars.size();
+        int varSize = (int)varNum.get(className);
         ret += String.format("MOVE TEMP %d HALLOCATE %d\n", ObjecttableTemp, varSize * 4 + 4);
         for (int i = 1; i <= varSize; ++i) {
             ret += String.format("HSTORE TEMP %d %d 0\n", ObjecttableTemp, 4 * i);
