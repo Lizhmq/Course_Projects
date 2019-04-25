@@ -32,18 +32,21 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
 
         MClass classEnv = global.queryClass(str);
 
+        int vars = 0, methods = 0;
+
         if (classEnv.superClassName != null) {
             createEntry(classEnv.superClassName);
             HashMap<String, Integer> superVarOfs = VarOffset.get(classEnv.superClassName);
             HashMap<String, Integer> superMethodOfs = MethodOffset.get(classEnv.superClassName);
             varOfs = new HashMap<String, Integer>(superVarOfs);
             methodOfs = new HashMap<String, Integer>(superMethodOfs);
+            vars = (int)varNum.get(classEnv.superClassName);
+            methods = (int)methodNum.get(classEnv.superClassName);
         } else {
             varOfs = new HashMap<String, Integer>();
             methodOfs = new HashMap<String, Integer>();
         }
 
-        int vars = (int)(varNum.get(str)), methods = (int)(methodNum.get(str);
         for (String varName : classEnv.memberVars.keySet()) {
             ++vars;
             varOfs.put(varName, 4 * vars);
@@ -203,13 +206,14 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         return Code + "\n\n";
     }
 
+    // params: TEMP 0 for THIS, TEMP 1-18 for params 0-17, TEMP 19 for more params
     public String visit(MethodDeclaration n, MType env) {
         String methodName = n.f2.f0.toString();
         MClass classEnv = (MClass) env;
         String className = classEnv.name;
         MMethod methodEnv = classEnv.queryMethod(methodName);
         int param = methodEnv.params.size();
-        String head = String.format("%s_%s [%d]\nBEGIN\n", className, methodName, param + 1);
+        String head = String.format("%s_%s [%d]\nBEGIN\n", className, methodName, param + 1 < 20 ? param + 1 : 20);
         String tail = "END";
         UsedTemp += methodEnv.otherLocalVars.size();
         String code = n.f8.accept(this, methodEnv);
@@ -236,8 +240,12 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         String id = n.f0.f0.toString();
         for (int i = 0; i < method.params.size(); ++i) {
             if (method.params.get(i).name.equals(id)) {
-                // return String.format("MOVE TEMP %d %s", i + 1, n.f2.accept(this, env);
-                return String.format("MOVE %s %s", n.f0.accept(this, env), n.f2.accept(this, env));
+                if (i < 18) {
+                    return String.format("MOVE %s %s", n.f0.accept(this, env), n.f2.accept(this, env));
+                }
+                else {
+                    return String.format("HSTORE TEMP 19 %d %s", (i - 18) * 4, n.f2.accept(this, env));
+                }
             }
         }
         if (method.varsTable.containsKey(id))
@@ -360,6 +368,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         MClass c = this.global.queryClass(className);
         // System.out.println(String.format("ClassName: %s", className));
         String methodName = n.f2.f0.toString();
+        // MMethod method = c.queryMethod(methodName);
         // int i = 0;
         // Enumeration method = c.memberMethods.keys();
         // while (c.memberMethods.get(method.nextElement()).name != methodName)
@@ -368,17 +377,32 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         ret += String.format("HLOAD TEMP %d TEMP %d %d\n", MethodTemp, MethodtableTemp, offset);
         ret += String.format("RETURN TEMP %d\n", MethodTemp);
         String args = n.f4.accept(this, env);
-        ret += String.format("END\n(TEMP %d%s)", ObjecttableTemp, args == "" ? "" : " " + args);
+        ret += String.format("END\n(TEMP %d%s)", ObjecttableTemp, args == null ? "" : " " + args);
         UsedTemp -= 3;
         return ret;
     }
 
     public String visit(ExpressionList n, MType env) {
-        return n.f0.accept(this, env) + n.f1.accept(this, env);
+        String ret = n.f0.accept(this, env) + n.f1.accept(this, env);
+        String[] ss = ret.split(",");
+        if (ss.length <= 18)
+            return ret.replace(',', ' ');
+        String sret = ss[0];
+        for (int i = 1; i < 18; ++i)
+            sret = sret + " " + ss[i];
+        int allocTemp = UsedTemp++;
+        int allocSize = (ss.length - 18) * 4;
+        String allocStmt = String.format("MOVE TEMP %d HALLOCATE %d", allocTemp, allocSize);
+        String storeStmt = "";
+        for (int i = 18; i < ss.length; ++i) {
+            storeStmt += String.format("HSTORE TEMP %d %d %s\n", allocTemp, (i - 18) * 4, ss[i]);
+        }
+        UsedTemp--;
+        return String.format("%s BEGIN\n%s\n%s RETURN TEMP %d END", sret, allocStmt, storeStmt, allocTemp);
     }
 
     public String visit(ExpressionRest n, MType env) {
-        return " " + n.f1.accept(this, env);
+        return "," + n.f1.accept(this, env);
     }
 
     public String visit(PrimaryExpression n, MType env) {
@@ -403,7 +427,12 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         int i = 0;
         for (; i < method.params.size(); ++i) {
             if (method.params.get(i).name.equals(id)) {
-                return String.format("TEMP %d", i + 1);
+                if (i < 18) {
+                    return String.format("TEMP %d", i + 1);
+                }
+                else {
+                    return String.format("BEGIN HLOAD TEMP %d TEMP 19 %d RETURN TEMP %d END", UsedTemp, (i - 18) * 4, UsedTemp);
+                }
             }
         }
         MVar var = method.queryVar(id);
@@ -459,7 +488,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         // int methodSize = c.memberMethods.size();
         int methodSize = (int)methodNum.get(className);
         ret += String.format("MOVE TEMP %d HALLOCATE %d\n", MethodtableTemp, methodSize * 4);
-        HashMap methods = (HashMap)MethodOffset.get(className);
+        HashMap<String, Integer> methods = MethodOffset.get(className);
         // for (int i = 0; i < methodSize; ++i) {
         //     MMethod method = c.memberMethods.get(methods.nextElement());
         //     ret += String.format("HSTORE TEMP %d %d %s_%s\n",
@@ -469,8 +498,8 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
             String methodName = (String) o;
             int offset = getMethodOffset(className, methodName);
             String cstr = className;
-            while (global.queryClass(className).queryMethod(methodName) == null) {
-                cstr = global.queryClass(className).superClassName;
+            while (!global.queryClass(cstr).memberMethods.keySet().contains(methodName)) {
+                cstr = global.queryClass(cstr).superClassName;
             }
             ret += String.format("HSTORE TEMP %d %d %s_%s\n",
                                 MethodtableTemp, offset, cstr, methodName);
