@@ -1,20 +1,38 @@
+
 class T {
-    public static void main(String[] args) {
-        int []a;
-        a = new int[10];
-        a[2] = 8888;
-        System.out.println(new A().out(666));
-        System.out.println(a[2]);
+    public static void main(String []args) {
+        A a;
+        B b;
+        b = new B();
+        a = b;
+        System.out.println(a.assignA(10));
+        System.out.println(b.assignB(20));
+        System.out.println(a.print(a.print(1)));
+        // System.out.println(b.print());
     }
 }
 
+
 class A {
-    int a;
-    public int out(int arg) {
-        int b;
-        b = 6666;
-        System.out.println(b);
-        a = 2333;
-        return a;
+    int age;
+    public int assignA(int value) {
+        age = value;
+        return value;
     }
+    public int print(int a) {
+        System.out.println(a);
+        return age;
+    }
+}
+
+class B extends A {
+    int age;
+    public int assignB(int value) {
+        age = value;
+        return value;
+    }
+    // public int print() {
+    //     System.out.println(age);
+    //     return age;
+    // }
 }
