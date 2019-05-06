@@ -140,7 +140,7 @@ public class GJNoArguDepthFirst<R> implements GJNoArguVisitor<R> {
 
    /**
     * f0 -> "CJUMP"
-    * f1 -> Temp()
+    * f1 -> Exp()
     * f2 -> Label()
     */
    public R visit(CJumpStmt n) {
@@ -164,9 +164,9 @@ public class GJNoArguDepthFirst<R> implements GJNoArguVisitor<R> {
 
    /**
     * f0 -> "HSTORE"
-    * f1 -> Temp()
+    * f1 -> Exp()
     * f2 -> IntegerLiteral()
-    * f3 -> Temp()
+    * f3 -> Exp()
     */
    public R visit(HStoreStmt n) {
       R _ret=null;
@@ -180,7 +180,7 @@ public class GJNoArguDepthFirst<R> implements GJNoArguVisitor<R> {
    /**
     * f0 -> "HLOAD"
     * f1 -> Temp()
-    * f2 -> Temp()
+    * f2 -> Exp()
     * f3 -> IntegerLiteral()
     */
    public R visit(HLoadStmt n) {
@@ -207,7 +207,7 @@ public class GJNoArguDepthFirst<R> implements GJNoArguVisitor<R> {
 
    /**
     * f0 -> "PRINT"
-    * f1 -> SimpleExp()
+    * f1 -> Exp()
     */
    public R visit(PrintStmt n) {
       R _ret=null;
@@ -217,10 +217,13 @@ public class GJNoArguDepthFirst<R> implements GJNoArguVisitor<R> {
    }
 
    /**
-    * f0 -> Call()
+    * f0 -> StmtExp()
+    *       | Call()
     *       | HAllocate()
     *       | BinOp()
-    *       | SimpleExp()
+    *       | Temp()
+    *       | IntegerLiteral()
+    *       | Label()
     */
    public R visit(Exp n) {
       R _ret=null;
@@ -232,7 +235,7 @@ public class GJNoArguDepthFirst<R> implements GJNoArguVisitor<R> {
     * f0 -> "BEGIN"
     * f1 -> StmtList()
     * f2 -> "RETURN"
-    * f3 -> SimpleExp()
+    * f3 -> Exp()
     * f4 -> "END"
     */
    public R visit(StmtExp n) {
@@ -247,9 +250,9 @@ public class GJNoArguDepthFirst<R> implements GJNoArguVisitor<R> {
 
    /**
     * f0 -> "CALL"
-    * f1 -> SimpleExp()
+    * f1 -> Exp()
     * f2 -> "("
-    * f3 -> ( Temp() )*
+    * f3 -> ( Exp() )*
     * f4 -> ")"
     */
    public R visit(Call n) {
@@ -264,7 +267,7 @@ public class GJNoArguDepthFirst<R> implements GJNoArguVisitor<R> {
 
    /**
     * f0 -> "HALLOCATE"
-    * f1 -> SimpleExp()
+    * f1 -> Exp()
     */
    public R visit(HAllocate n) {
       R _ret=null;
@@ -275,8 +278,8 @@ public class GJNoArguDepthFirst<R> implements GJNoArguVisitor<R> {
 
    /**
     * f0 -> Operator()
-    * f1 -> Temp()
-    * f2 -> SimpleExp()
+    * f1 -> Exp()
+    * f2 -> Exp()
     */
    public R visit(BinOp n) {
       R _ret=null;
@@ -293,17 +296,6 @@ public class GJNoArguDepthFirst<R> implements GJNoArguVisitor<R> {
     *       | "TIMES"
     */
    public R visit(Operator n) {
-      R _ret=null;
-      n.f0.accept(this);
-      return _ret;
-   }
-
-   /**
-    * f0 -> Temp()
-    *       | IntegerLiteral()
-    *       | Label()
-    */
-   public R visit(SimpleExp n) {
       R _ret=null;
       n.f0.accept(this);
       return _ret;

@@ -2,9 +2,9 @@ options {
   JAVA_UNICODE_ESCAPE = true;
 }
 
-PARSER_BEGIN(SpigletParser)
-  public class SpigletParser {}
-PARSER_END(SpigletParser)
+PARSER_BEGIN(PigletParser)
+  public class PigletParser {}
+PARSER_END(PigletParser)
 
 SKIP : /* WHITE SPACE */
 {
@@ -21,7 +21,6 @@ SPECIAL_TOKEN : /* COMMENTS */
 | <FORMAL_COMMENT: "/**" (~["*"])* "*" ("*" | (~["*","/"] (~["*"])* "*"))* "/">
 | <MULTI_LINE_COMMENT: "/*" (~["*"])* "*" ("*" | (~["*","/"] (~["*"])* "*"))* "/">
 }
-
 
 TOKEN : 
 {
@@ -112,9 +111,9 @@ TOKEN : /* IDENTIFIERS */
   >
 }
 
-/***********************************
- * The Spiglet Grammar Starts Here *
- ***********************************/
+/**********************************
+ * The Piglet Grammar Starts Here *
+ **********************************/
 
 
 void Goal() :
@@ -170,7 +169,7 @@ void ErrorStmt() :
 void CJumpStmt() :
 {}
 {	
-  "CJUMP" Temp() Label() 
+  "CJUMP" Exp() Label() 
 }
 
 void JumpStmt() :
@@ -182,13 +181,13 @@ void JumpStmt() :
 void HStoreStmt() :
 {}
 {
-  "HSTORE" Temp() IntegerLiteral() Temp()
+  "HSTORE" Exp() IntegerLiteral() Exp()
 }
 
 void HLoadStmt() :
 {}
 {
-  "HLOAD" Temp() Temp() IntegerLiteral() 
+  "HLOAD" Temp() Exp() IntegerLiteral() 
 }
 
 void MoveStmt() :
@@ -200,43 +199,49 @@ void MoveStmt() :
 void PrintStmt() :
 {}
 {
-  "PRINT" SimpleExp() 
+  "PRINT" Exp() 
 }
 
 void Exp():
 {}
 {
+  StmtExp()
+|
   Call()
 |
   HAllocate()
 |
   BinOp()
-| 
-  SimpleExp()
+|
+  Temp()
+|
+  IntegerLiteral()
+|
+  Label()
 }
 
 void StmtExp() :
 {}
 {
-  "BEGIN" StmtList() "RETURN" SimpleExp() "END"
+  "BEGIN" StmtList() "RETURN" Exp() "END"
 }
 
 void Call() :
 {}
 {       
-  "CALL" SimpleExp() "(" ( Temp() )* ")"
+  "CALL" Exp() "(" ( Exp() )* ")"
 }
 
 void HAllocate() :
 {}
 {       
-  "HALLOCATE" SimpleExp()
+  "HALLOCATE" Exp()
 }
 
 void BinOp() :
 {}
 {
-  Operator() Temp() SimpleExp()
+  Operator() Exp() Exp()
 }
 
 void Operator() :
@@ -249,16 +254,6 @@ void Operator() :
   "MINUS" 
 | 
   "TIMES" 
-}
-
-void SimpleExp() :
-{}
-{
-  Temp()
-|
-  IntegerLiteral()
-|
-  Label()
 }
 
 void Temp() :

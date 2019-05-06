@@ -7,18 +7,18 @@ package syntaxtree;
 /**
  * Grammar production:
  * f0 -> "HALLOCATE"
- * f1 -> SimpleExp()
+ * f1 -> Exp()
  */
 public class HAllocate implements Node {
    public NodeToken f0;
-   public SimpleExp f1;
+   public Exp f1;
 
-   public HAllocate(NodeToken n0, SimpleExp n1) {
+   public HAllocate(NodeToken n0, Exp n1) {
       f0 = n0;
       f1 = n1;
    }
 
-   public HAllocate(SimpleExp n0) {
+   public HAllocate(Exp n0) {
       f0 = new NodeToken("HALLOCATE");
       f1 = n0;
    }

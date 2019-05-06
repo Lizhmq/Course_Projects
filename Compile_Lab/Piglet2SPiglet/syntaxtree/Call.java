@@ -7,19 +7,19 @@ package syntaxtree;
 /**
  * Grammar production:
  * f0 -> "CALL"
- * f1 -> SimpleExp()
+ * f1 -> Exp()
  * f2 -> "("
- * f3 -> ( Temp() )*
+ * f3 -> ( Exp() )*
  * f4 -> ")"
  */
 public class Call implements Node {
    public NodeToken f0;
-   public SimpleExp f1;
+   public Exp f1;
    public NodeToken f2;
    public NodeListOptional f3;
    public NodeToken f4;
 
-   public Call(NodeToken n0, SimpleExp n1, NodeToken n2, NodeListOptional n3, NodeToken n4) {
+   public Call(NodeToken n0, Exp n1, NodeToken n2, NodeListOptional n3, NodeToken n4) {
       f0 = n0;
       f1 = n1;
       f2 = n2;
@@ -27,7 +27,7 @@ public class Call implements Node {
       f4 = n4;
    }
 
-   public Call(SimpleExp n0, NodeListOptional n1) {
+   public Call(Exp n0, NodeListOptional n1) {
       f0 = new NodeToken("CALL");
       f1 = n0;
       f2 = new NodeToken("(");

@@ -8,23 +8,23 @@ package syntaxtree;
  * Grammar production:
  * f0 -> "HLOAD"
  * f1 -> Temp()
- * f2 -> Temp()
+ * f2 -> Exp()
  * f3 -> IntegerLiteral()
  */
 public class HLoadStmt implements Node {
    public NodeToken f0;
    public Temp f1;
-   public Temp f2;
+   public Exp f2;
    public IntegerLiteral f3;
 
-   public HLoadStmt(NodeToken n0, Temp n1, Temp n2, IntegerLiteral n3) {
+   public HLoadStmt(NodeToken n0, Temp n1, Exp n2, IntegerLiteral n3) {
       f0 = n0;
       f1 = n1;
       f2 = n2;
       f3 = n3;
    }
 
-   public HLoadStmt(Temp n0, Temp n1, IntegerLiteral n2) {
+   public HLoadStmt(Temp n0, Exp n1, IntegerLiteral n2) {
       f0 = new NodeToken("HLOAD");
       f1 = n0;
       f2 = n1;

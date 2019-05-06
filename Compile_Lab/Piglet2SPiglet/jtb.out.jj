@@ -6,12 +6,12 @@ options {
    JAVA_UNICODE_ESCAPE = true;
 }
 
-PARSER_BEGIN(SpigletParser)
+PARSER_BEGIN(PigletParser)
 import syntaxtree.*;
 import java.util.Vector;
 
 
-public class SpigletParser 
+public class PigletParser 
 {
 }
 
@@ -22,7 +22,7 @@ class JTBToolkit {
 }
 
 
-PARSER_END(SpigletParser)
+PARSER_END(PigletParser)
 
 SKIP :
 {
@@ -248,14 +248,14 @@ CJumpStmt CJumpStmt() :
 {
    NodeToken n0;
    Token n1;
-   Temp n2;
+   Exp n2;
    Label n3;
 
    
 }
 {
    n1="CJUMP" { n0 = JTBToolkit.makeNodeToken(n1); }
-   n2=Temp()
+   n2=Exp()
    n3=Label()
    
    { return new CJumpStmt(n0,n2,n3); }
@@ -280,17 +280,17 @@ HStoreStmt HStoreStmt() :
 {
    NodeToken n0;
    Token n1;
-   Temp n2;
+   Exp n2;
    IntegerLiteral n3;
-   Temp n4;
+   Exp n4;
 
    
 }
 {
    n1="HSTORE" { n0 = JTBToolkit.makeNodeToken(n1); }
-   n2=Temp()
+   n2=Exp()
    n3=IntegerLiteral()
-   n4=Temp()
+   n4=Exp()
    
    { return new HStoreStmt(n0,n2,n3,n4); }
 }
@@ -300,7 +300,7 @@ HLoadStmt HLoadStmt() :
    NodeToken n0;
    Token n1;
    Temp n2;
-   Temp n3;
+   Exp n3;
    IntegerLiteral n4;
 
    
@@ -308,7 +308,7 @@ HLoadStmt HLoadStmt() :
 {
    n1="HLOAD" { n0 = JTBToolkit.makeNodeToken(n1); }
    n2=Temp()
-   n3=Temp()
+   n3=Exp()
    n4=IntegerLiteral()
    
    { return new HLoadStmt(n0,n2,n3,n4); }
@@ -335,13 +335,13 @@ PrintStmt PrintStmt() :
 {
    NodeToken n0;
    Token n1;
-   SimpleExp n2;
+   Exp n2;
 
    
 }
 {
    n1="PRINT" { n0 = JTBToolkit.makeNodeToken(n1); }
-   n2=SimpleExp()
+   n2=Exp()
    
    { return new PrintStmt(n0,n2); }
 }
@@ -349,26 +349,38 @@ PrintStmt PrintStmt() :
 Exp Exp() :
 {
    NodeChoice n0;
-   Call n1;
-   HAllocate n2;
-   BinOp n3;
-   SimpleExp n4;
+   StmtExp n1;
+   Call n2;
+   HAllocate n3;
+   BinOp n4;
+   Temp n5;
+   IntegerLiteral n6;
+   Label n7;
 
    
 }
 {
    (
-      n1=Call()
+      n1=StmtExp()
       { n0 = new NodeChoice(n1, 0); }
    |
-      n2=HAllocate()
+      n2=Call()
       { n0 = new NodeChoice(n2, 1); }
    |
-      n3=BinOp()
+      n3=HAllocate()
       { n0 = new NodeChoice(n3, 2); }
    |
-      n4=SimpleExp()
+      n4=BinOp()
       { n0 = new NodeChoice(n4, 3); }
+   |
+      n5=Temp()
+      { n0 = new NodeChoice(n5, 4); }
+   |
+      n6=IntegerLiteral()
+      { n0 = new NodeChoice(n6, 5); }
+   |
+      n7=Label()
+      { n0 = new NodeChoice(n7, 6); }
    )
    
    { return new Exp(n0); }
@@ -381,7 +393,7 @@ StmtExp StmtExp() :
    StmtList n2;
    NodeToken n3;
    Token n4;
-   SimpleExp n5;
+   Exp n5;
    NodeToken n6;
    Token n7;
 
@@ -391,7 +403,7 @@ StmtExp StmtExp() :
    n1="BEGIN" { n0 = JTBToolkit.makeNodeToken(n1); }
    n2=StmtList()
    n4="RETURN" { n3 = JTBToolkit.makeNodeToken(n4); }
-   n5=SimpleExp()
+   n5=Exp()
    n7="END" { n6 = JTBToolkit.makeNodeToken(n7); }
    
    { return new StmtExp(n0,n2,n3,n5,n6); }
@@ -401,11 +413,11 @@ Call Call() :
 {
    NodeToken n0;
    Token n1;
-   SimpleExp n2;
+   Exp n2;
    NodeToken n3;
    Token n4;
    NodeListOptional n5 = new NodeListOptional();
-   Temp n6;
+   Exp n6;
    NodeToken n7;
    Token n8;
 
@@ -413,10 +425,10 @@ Call Call() :
 }
 {
    n1="CALL" { n0 = JTBToolkit.makeNodeToken(n1); }
-   n2=SimpleExp()
+   n2=Exp()
    n4="(" { n3 = JTBToolkit.makeNodeToken(n4); }
    (
-      n6=Temp()
+      n6=Exp()
       { n5.addNode(n6); }
    )*
    { n5.nodes.trimToSize(); }
@@ -429,13 +441,13 @@ HAllocate HAllocate() :
 {
    NodeToken n0;
    Token n1;
-   SimpleExp n2;
+   Exp n2;
 
    
 }
 {
    n1="HALLOCATE" { n0 = JTBToolkit.makeNodeToken(n1); }
-   n2=SimpleExp()
+   n2=Exp()
    
    { return new HAllocate(n0,n2); }
 }
@@ -443,15 +455,15 @@ HAllocate HAllocate() :
 BinOp BinOp() :
 {
    Operator n0;
-   Temp n1;
-   SimpleExp n2;
+   Exp n1;
+   Exp n2;
 
    
 }
 {
    n0=Operator()
-   n1=Temp()
-   n2=SimpleExp()
+   n1=Exp()
+   n2=Exp()
    
    { return new BinOp(n0,n1,n2); }
 }
@@ -486,30 +498,6 @@ Operator Operator() :
    )
    
    { return new Operator(n0); }
-}
-
-SimpleExp SimpleExp() :
-{
-   NodeChoice n0;
-   Temp n1;
-   IntegerLiteral n2;
-   Label n3;
-
-   
-}
-{
-   (
-      n1=Temp()
-      { n0 = new NodeChoice(n1, 0); }
-   |
-      n2=IntegerLiteral()
-      { n0 = new NodeChoice(n2, 1); }
-   |
-      n3=Label()
-      { n0 = new NodeChoice(n3, 2); }
-   )
-   
-   { return new SimpleExp(n0); }
 }
 
 Temp Temp() :

@@ -118,7 +118,7 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
 
    /**
     * f0 -> "CJUMP"
-    * f1 -> Temp()
+    * f1 -> Exp()
     * f2 -> Label()
     */
    public void visit(CJumpStmt n, A argu) {
@@ -138,9 +138,9 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
 
    /**
     * f0 -> "HSTORE"
-    * f1 -> Temp()
+    * f1 -> Exp()
     * f2 -> IntegerLiteral()
-    * f3 -> Temp()
+    * f3 -> Exp()
     */
    public void visit(HStoreStmt n, A argu) {
       n.f0.accept(this, argu);
@@ -152,7 +152,7 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
    /**
     * f0 -> "HLOAD"
     * f1 -> Temp()
-    * f2 -> Temp()
+    * f2 -> Exp()
     * f3 -> IntegerLiteral()
     */
    public void visit(HLoadStmt n, A argu) {
@@ -175,7 +175,7 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
 
    /**
     * f0 -> "PRINT"
-    * f1 -> SimpleExp()
+    * f1 -> Exp()
     */
    public void visit(PrintStmt n, A argu) {
       n.f0.accept(this, argu);
@@ -183,10 +183,13 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
    }
 
    /**
-    * f0 -> Call()
+    * f0 -> StmtExp()
+    *       | Call()
     *       | HAllocate()
     *       | BinOp()
-    *       | SimpleExp()
+    *       | Temp()
+    *       | IntegerLiteral()
+    *       | Label()
     */
    public void visit(Exp n, A argu) {
       n.f0.accept(this, argu);
@@ -196,7 +199,7 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
     * f0 -> "BEGIN"
     * f1 -> StmtList()
     * f2 -> "RETURN"
-    * f3 -> SimpleExp()
+    * f3 -> Exp()
     * f4 -> "END"
     */
    public void visit(StmtExp n, A argu) {
@@ -209,9 +212,9 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
 
    /**
     * f0 -> "CALL"
-    * f1 -> SimpleExp()
+    * f1 -> Exp()
     * f2 -> "("
-    * f3 -> ( Temp() )*
+    * f3 -> ( Exp() )*
     * f4 -> ")"
     */
    public void visit(Call n, A argu) {
@@ -224,7 +227,7 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
 
    /**
     * f0 -> "HALLOCATE"
-    * f1 -> SimpleExp()
+    * f1 -> Exp()
     */
    public void visit(HAllocate n, A argu) {
       n.f0.accept(this, argu);
@@ -233,8 +236,8 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
 
    /**
     * f0 -> Operator()
-    * f1 -> Temp()
-    * f2 -> SimpleExp()
+    * f1 -> Exp()
+    * f2 -> Exp()
     */
    public void visit(BinOp n, A argu) {
       n.f0.accept(this, argu);
@@ -249,15 +252,6 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
     *       | "TIMES"
     */
    public void visit(Operator n, A argu) {
-      n.f0.accept(this, argu);
-   }
-
-   /**
-    * f0 -> Temp()
-    *       | IntegerLiteral()
-    *       | Label()
-    */
-   public void visit(SimpleExp n, A argu) {
       n.f0.accept(this, argu);
    }
 

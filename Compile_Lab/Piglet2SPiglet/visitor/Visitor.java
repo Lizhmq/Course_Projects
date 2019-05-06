@@ -73,7 +73,7 @@ public interface Visitor {
 
    /**
     * f0 -> "CJUMP"
-    * f1 -> Temp()
+    * f1 -> Exp()
     * f2 -> Label()
     */
    public void visit(CJumpStmt n);
@@ -86,16 +86,16 @@ public interface Visitor {
 
    /**
     * f0 -> "HSTORE"
-    * f1 -> Temp()
+    * f1 -> Exp()
     * f2 -> IntegerLiteral()
-    * f3 -> Temp()
+    * f3 -> Exp()
     */
    public void visit(HStoreStmt n);
 
    /**
     * f0 -> "HLOAD"
     * f1 -> Temp()
-    * f2 -> Temp()
+    * f2 -> Exp()
     * f3 -> IntegerLiteral()
     */
    public void visit(HLoadStmt n);
@@ -109,15 +109,18 @@ public interface Visitor {
 
    /**
     * f0 -> "PRINT"
-    * f1 -> SimpleExp()
+    * f1 -> Exp()
     */
    public void visit(PrintStmt n);
 
    /**
-    * f0 -> Call()
+    * f0 -> StmtExp()
+    *       | Call()
     *       | HAllocate()
     *       | BinOp()
-    *       | SimpleExp()
+    *       | Temp()
+    *       | IntegerLiteral()
+    *       | Label()
     */
    public void visit(Exp n);
 
@@ -125,30 +128,30 @@ public interface Visitor {
     * f0 -> "BEGIN"
     * f1 -> StmtList()
     * f2 -> "RETURN"
-    * f3 -> SimpleExp()
+    * f3 -> Exp()
     * f4 -> "END"
     */
    public void visit(StmtExp n);
 
    /**
     * f0 -> "CALL"
-    * f1 -> SimpleExp()
+    * f1 -> Exp()
     * f2 -> "("
-    * f3 -> ( Temp() )*
+    * f3 -> ( Exp() )*
     * f4 -> ")"
     */
    public void visit(Call n);
 
    /**
     * f0 -> "HALLOCATE"
-    * f1 -> SimpleExp()
+    * f1 -> Exp()
     */
    public void visit(HAllocate n);
 
    /**
     * f0 -> Operator()
-    * f1 -> Temp()
-    * f2 -> SimpleExp()
+    * f1 -> Exp()
+    * f2 -> Exp()
     */
    public void visit(BinOp n);
 
@@ -159,13 +162,6 @@ public interface Visitor {
     *       | "TIMES"
     */
    public void visit(Operator n);
-
-   /**
-    * f0 -> Temp()
-    *       | IntegerLiteral()
-    *       | Label()
-    */
-   public void visit(SimpleExp n);
 
    /**
     * f0 -> "TEMP"

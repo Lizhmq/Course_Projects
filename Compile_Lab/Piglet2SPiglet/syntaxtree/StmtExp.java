@@ -9,17 +9,17 @@ package syntaxtree;
  * f0 -> "BEGIN"
  * f1 -> StmtList()
  * f2 -> "RETURN"
- * f3 -> SimpleExp()
+ * f3 -> Exp()
  * f4 -> "END"
  */
 public class StmtExp implements Node {
    public NodeToken f0;
    public StmtList f1;
    public NodeToken f2;
-   public SimpleExp f3;
+   public Exp f3;
    public NodeToken f4;
 
-   public StmtExp(NodeToken n0, StmtList n1, NodeToken n2, SimpleExp n3, NodeToken n4) {
+   public StmtExp(NodeToken n0, StmtList n1, NodeToken n2, Exp n3, NodeToken n4) {
       f0 = n0;
       f1 = n1;
       f2 = n2;
@@ -27,7 +27,7 @@ public class StmtExp implements Node {
       f4 = n4;
    }
 
-   public StmtExp(StmtList n0, SimpleExp n1) {
+   public StmtExp(StmtList n0, Exp n1) {
       f0 = new NodeToken("BEGIN");
       f1 = n0;
       f2 = new NodeToken("RETURN");
