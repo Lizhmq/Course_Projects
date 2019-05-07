@@ -234,6 +234,8 @@ public class SpigletVisitor extends GJDepthFirst<SpigletResult, Boolean> {
                                 tmp = "MOVE TEMP " + (temp + i + 1) + " " + args[i] + "\n";
                                 put(tmp);
                                 templist += "TEMP " + (temp + i + 1) + " ";
+                        } else {
+                                templist += args[i] + " ";
                         }
                 }
                 tmp = "CALL ";
