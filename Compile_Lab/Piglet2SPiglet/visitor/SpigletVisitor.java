@@ -17,22 +17,45 @@ public class SpigletVisitor extends GJDepthFirst<SpigletResult, Boolean> {
                 result.append(cur);
                 return;
         }
+
+        public SpigletResult visit(NodeList n, Boolean isPut) {
+                StringBuilder b = new StringBuilder("");
+                for (Enumeration<Node> e = n.elements(); e.hasMoreElements(); ) {
+                        SpigletResult tmp = e.nextElement().accept(this, isPut);
+                        if (tmp != null) {
+                                b.append(tmp.toString());
+                                b.append("\n");
+                        }
+                }
+                return new SpigletResult(b.toString(), false);
+        }
         
         public SpigletResult visit(NodeListOptional n, Boolean isPut) {
                 if (n.present()) {
                         StringBuilder b = new StringBuilder("");
                         for (Enumeration<Node> e = n.elements(); e.hasMoreElements(); ) {
-                                b.append(e.nextElement().accept(this, isPut));
-                                b.append("\n");
+                                SpigletResult tmp = e.nextElement().accept(this, isPut);
+                                if (tmp != null) {
+                                        b.append(tmp.toString());
+                                        b.append("\n");
+                                }
                         }
-                        // if (isPut) {
-                        //         put(b.toString());
-                        //         return null;
-                        // }
                         return new SpigletResult(b.toString(), false);
                 } else {
                         return null;
                 }
+        }
+
+        public SpigletResult visit(NodeSequence n, Boolean isPut) {
+                StringBuilder b = new StringBuilder("");
+                for (Enumeration<Node> e = n.elements(); e.hasMoreElements(); ) {
+                        SpigletResult tmp = e.nextElement().accept(this, isPut);
+                        if (tmp != null) {
+                                b.append(tmp.toString());
+                                b.append("\n");
+                        }
+                }
+                return new SpigletResult(b.toString(), false);
         }
 
         public SpigletResult visit(Goal n, Boolean isPut) {
@@ -54,30 +77,24 @@ public class SpigletVisitor extends GJDepthFirst<SpigletResult, Boolean> {
                 String res = "NOOP\n";
                 if (isPut) {
                         put(res);
-                        return null;
-                } else {
-                        return new SpigletResult(res, false);
                 }
+                return new SpigletResult(res, false);
         }
 
         public SpigletResult visit(ErrorStmt n, Boolean isPut) {
                 String res = "ERROR\n";
                 if (isPut) {
                         put(res);
-                        return null;
-                } else {
-                        return new SpigletResult(res, false);
                 }
+                return new SpigletResult(res, false);
         }
 
         public SpigletResult visit(JumpStmt n, Boolean isPut) {
                 String res = "JUMP " + n.f1.f0.tokenImage + "\n";
                 if (isPut) {
                         put(res);
-                        return null;
-                } else {
-                        return new SpigletResult(res, false);
                 }
+                return new SpigletResult(res, false);
         }
 
         public SpigletResult visit(HStoreStmt n, Boolean isPut) {
@@ -99,10 +116,8 @@ public class SpigletVisitor extends GJDepthFirst<SpigletResult, Boolean> {
                 UsedTemp = savedTemp;
                 if (isPut) {
                         put(res);
-                        return null;
-                } else {
-                        return new SpigletResult(res, false);
                 }
+                return new SpigletResult(res, false);
         }
 
         public SpigletResult visit(CJumpStmt n, Boolean isPut) {
@@ -118,10 +133,8 @@ public class SpigletVisitor extends GJDepthFirst<SpigletResult, Boolean> {
                 UsedTemp = savedTemp;
                 if (isPut) {
                         put(res);
-                        return null;
-                } else {
-                        return new SpigletResult(res, false);
                 }
+                return new SpigletResult(res, false);
         }
 
         public SpigletResult visit(HLoadStmt n, Boolean isPut) {
@@ -138,10 +151,8 @@ public class SpigletVisitor extends GJDepthFirst<SpigletResult, Boolean> {
                 UsedTemp = savedTemp;
                 if (isPut) {
                         put(res);
-                        return null;
-                } else {
-                        return new SpigletResult(res, false);
                 }
+                return new SpigletResult(res, false);
         }
 
         public SpigletResult visit(PrintStmt n, Boolean isPut) {
@@ -157,10 +168,8 @@ public class SpigletVisitor extends GJDepthFirst<SpigletResult, Boolean> {
                 UsedTemp = savedTemp;
                 if (isPut) {
                         put(res);
-                        return null;
-                } else {
-                        return new SpigletResult(res, false);
                 }
+                return new SpigletResult(res, false);
         }
 
         public SpigletResult visit(MoveStmt n, Boolean isPut) {
@@ -168,13 +177,15 @@ public class SpigletVisitor extends GJDepthFirst<SpigletResult, Boolean> {
                 String res = "MOVE TEMP " + n.f1.f1.f0.tokenImage + " " + exp;
                 if (isPut) {
                         put(res);
-                        return null;
-                } else {
-                        return new SpigletResult(res, false);
                 }
+                return new SpigletResult(res, false);
         }
 
         public SpigletResult visit(Exp n, Boolean isPut) {
+                return n.f0.accept(this, isPut);
+        }
+
+        public SpigletResult visit(Stmt n, Boolean isPut) {
                 return n.f0.accept(this, isPut);
         }
 
@@ -194,10 +205,8 @@ public class SpigletVisitor extends GJDepthFirst<SpigletResult, Boolean> {
                 UsedTemp = savedTemp;
                 if (isPut) {
                         put(tmp);
-                        return null;
-                } else {
-                        return new SpigletResult(tmp, false);
                 }
+                return new SpigletResult(tmp, false);
         }
 
         public SpigletResult visit(StmtList n, Boolean isPut) {
