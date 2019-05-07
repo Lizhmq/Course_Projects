@@ -7,8 +7,7 @@ import utils.*;
 public class MaxTempVisitor extends GJVoidDepthFirst<Integer> {
 
         public int MaxTemp = 0;
-        public int visit(Temp n) {
-                MaxTemp = max(n.f1.f0.tokenImage, MaxTemp);
-                return MaxTemp;
+        public void visit(Temp n, int p) {
+                MaxTemp = Math.max(Integer.parseInt(n.f1.f0.tokenImage), MaxTemp);
         }
 }

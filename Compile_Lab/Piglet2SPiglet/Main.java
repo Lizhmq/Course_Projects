@@ -11,7 +11,7 @@ public class Main {
 			InputStream in = new FileInputStream(args[0]);
 			Node root = new PigletParser(in).Goal();
 			MaxTempVisitor tmpVis = new MaxTempVisitor();
-			root.accept(tmpVis);
+			root.accept(tmpVis, 0);
 			SpigletVisitor vis = new SpigletVisitor(tmpVis.MaxTemp + 1);
 			SpigletResult res = root.accept(vis, true);
 			String spig = vis.result.toString();
