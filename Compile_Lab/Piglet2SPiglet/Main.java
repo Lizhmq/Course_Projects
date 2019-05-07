@@ -13,7 +13,7 @@ public class Main {
 			MaxTempVisitor tmpVis = new MaxTempVisitor();
 			root.accept(tmpVis, 0);
 			SpigletVisitor vis = new SpigletVisitor(tmpVis.MaxTemp + 1);
-			SpigletResult res = root.accept(vis, true);
+			SpigletResult res = root.accept(vis, false);
 			String spig = vis.result.toString();
 			String outputfile = null;
 			if (args.length > 1) {
