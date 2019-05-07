@@ -1,6 +1,5 @@
 import java.io.*;
 
-import visitor.SpigletVisitor;
 import visitor.*;
 import syntaxtree.*;
 import java.util.*;
@@ -11,8 +10,10 @@ public class Main {
 		try {
 			InputStream in = new FileInputStream(args[0]);
 			Node root = new PigletParser(in).Goal();
-			SpigletVisitor vis = new SpigletVisitor();
-			SpigletResult res = root.accept(vis);
+			MaxTempVisitor tmpVis = new MaxTempVisitor();
+			root.accept(tmpVis);
+			SpigletVisitor vis = new SpigletVisitor(tmpVis.MaxTemp + 1);
+			SpigletResult res = root.accept(vis, true);
 			String spig = vis.result.toString();
 			String outputfile = null;
 			if (args.length > 1) {
