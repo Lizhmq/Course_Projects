@@ -12,11 +12,23 @@ public class Main {
 		try {
 			InputStream in = new FileInputStream(args[0]);
 			Node root = new PigletParser(in).Goal();
-			MaxTempVisitor tmpVis = new MaxTempVisitor();
-			root.accept(tmpVis, 0);
-			SpigletVisitor vis = new SpigletVisitor(tmpVis.MaxTemp + 1);
-			SpigletResult res = root.accept(vis, false);
-			String spig = vis.result.toString();
+			
+			GraphVertexVisitor VVis = new GetGraphVertex();
+			root.accept(VVis);
+
+
+			new SpigletParser(input);
+			Node AST = SpigletParser.Goal();
+			// visit 1: Get Flow Graph Vertex
+			AST.accept(new GetFlowGraphVertex());
+			// visit 2: Get Flow Graph
+			AST.accept(new GetFlowGraph());
+			// Linear Scan Algorithm on Flow Graph
+			new Temp2Reg().LinearScan();
+			// visit 3: Spiglet->Kanga
+			AST.accept(new Spiglet2Kanga());
+
+
 			String outputfile = null;
 			if (args.length > 1) {
 				outputfile = args[1];
