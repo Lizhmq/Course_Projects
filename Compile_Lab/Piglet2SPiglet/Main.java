@@ -5,6 +5,8 @@ import syntaxtree.*;
 import java.util.*;
 import utils.*;
 
+// Usage:	java Main sample.pg out.spg
+
 public class Main {
 	public static void main(String args[]) {
 		try {

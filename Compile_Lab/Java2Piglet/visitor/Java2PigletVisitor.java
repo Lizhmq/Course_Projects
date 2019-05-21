@@ -61,7 +61,7 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
 
         VarOffset.put(str, varOfs);
         MethodOffset.put(str, methodOfs);
-        varNum.put(str, varOfs.size());
+        varNum.put(str, vars);
         methodNum.put(str, methodOfs.size());
 
     }
@@ -464,9 +464,9 @@ public class Java2PigletVisitor extends GJDepthFirst<String, MType> {
         String head = "BEGIN\n";
         String tail = "END";
         int sizeTemp = UsedTemp++;
-        String getSize = String.format("MOVE TEMP %d TIMES 4 %s\n", sizeTemp, n.f3.accept(this, env));
+        String getSize = String.format("MOVE TEMP %d %s\n", sizeTemp, n.f3.accept(this, env));
         int addrTemp = UsedTemp++;
-        String getAddr = String.format("MOVE TEMP %d HALLOCATE PLUS 4 TEMP %d\n", addrTemp, sizeTemp);
+        String getAddr = String.format("MOVE TEMP %d HALLOCATE PLUS 4 TIMES 4 TEMP %d\n", addrTemp, sizeTemp);
         String setLen = String.format("HSTORE TEMP %d 0 TEMP %d\n", addrTemp, sizeTemp);
         String ret = String.format("RETURN TEMP %d\n", addrTemp);
         UsedTemp -= 2;
