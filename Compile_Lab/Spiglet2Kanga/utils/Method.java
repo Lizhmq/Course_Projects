@@ -12,7 +12,7 @@ public class Method {
 	// SPILLEDARG *
 	public HashMap<String, String> regSpilled = new HashMap<String, String>();
 	// tempNo -> Interval
-	public HashMap<Integer, LiveInterval> mTemp = new HashMap<Integer, Interval>();
+	public HashMap<Integer, Interval> mTemp = new HashMap<Integer, Interval>();
 
 	public Graph graph = new Graph();
 
