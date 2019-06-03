@@ -1,9 +1,8 @@
 package utils;
-import java.util.*;
 
-class Interval {
+public class Interval implements Comparable<Interval> {
 	public int begin, end;
-	// public boolean S = false;
+	public boolean save = false;
 	public int tempNo;
 
 	public Interval(int tempNo, int begin, int end) {
@@ -12,9 +11,9 @@ class Interval {
 		this.tempNo = tempNo;
 	}
 
-	public bool compare(Interval b) {
+	public int compareTo(Interval b) {
 		if (begin == b.begin)
-			return end < b.end;
-		return begin < b.begin;
+			return end - b.end;
+		return begin - b.begin;
 	}
 }

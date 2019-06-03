@@ -1,0 +1,15 @@
+/.vscode
+/kanga/*.class
+/src/*.kg
+/syntaxtree/*.class
+/stat/*.class
+/stat/.DS_Store
+/visitor/.DS_Store
+/kanga/.DS_Store
+/src/.DS_Store
+/syntaxtree/.DS_Store
+/visitor/.DS_Store
+*.jj
+*.class
+jtb132.jar
+.DS_Store

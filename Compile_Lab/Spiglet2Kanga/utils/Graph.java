@@ -1,12 +1,12 @@
 package utils;
 import java.util.*;
 
-import spiglet.visitor.GetFlowGraphVertex;
+//import spiglet.visitor.GetFlowGraphVertex;
 
-class Graph {
+public class Graph {
 	public HashSet<GraphVertex> Vertexs = new HashSet<GraphVertex>();
 	public HashMap<Integer, GraphVertex> VertexMap = new HashMap<Integer, GraphVertex>();
-	public HashSet<Interger> CallPos = new HashSet<Integer>();
+	public HashSet<Integer> CallPos = new HashSet<Integer>();
 
 	public GraphVertex getVertex(int vid) {
 		return VertexMap.get(vid);
@@ -19,8 +19,8 @@ class Graph {
 	}
 
 	public void addEdge(int src, int dst) {
-		GraphVertex s = this.Vertexs.get(src);
-		GraphVertex d = this.Vertexs.get(dst);
+		GraphVertex s = this.VertexMap.get(src);
+		GraphVertex d = this.VertexMap.get(dst);
 		s.Succ.add(d);
 		d.Pred.add(s);
 	}

@@ -1,9 +1,9 @@
 package utils;
 import java.util.*;
 
-import com.sun.tools.jdeps.Graph;
+// import com.sun.tools.jdeps.Graph;
 
-class GraphVertex {
+public class GraphVertex {
 	public int vid;
 	public HashSet<GraphVertex> Pred = new HashSet<GraphVertex>();
 	public HashSet<GraphVertex> Succ = new HashSet<GraphVertex>();
