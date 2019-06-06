@@ -1,0 +1,4 @@
+rm visitor/*.class
+rm syntaxtree/*.class
+rm *.class
+

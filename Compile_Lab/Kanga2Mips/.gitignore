@@ -1,0 +1,10 @@
+.DS_Store
+*.class
+kanga/*.class
+kanga/.DS_Store
+syntaxtree/*.class
+syntaxtree/.DS_Store
+visitor/*.class
+visitor/.DS_Store
+src/*.s
+src/.DS_Store
