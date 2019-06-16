@@ -1,0 +1,501 @@
+start training epoch 1....
+test_acc:  74.37
+
+
+
+start training epoch 2....
+test_acc:  75.35
+
+
+
+start training epoch 3....
+test_acc:  75.81
+
+
+
+start training epoch 4....
+test_acc:  76.41
+
+
+
+start training epoch 5....
+test_acc:  76.75
+
+
+
+start training epoch 6....
+test_acc:  76.92
+
+
+
+start training epoch 7....
+test_acc:  77.15
+
+
+
+start training epoch 8....
+test_acc:  77.15
+
+
+
+start training epoch 9....
+test_acc:  76.91
+
+
+
+start training epoch 10....
+test_acc:  76.85
+
+
+
+start training epoch 11....
+test_acc:  76.86
+
+
+
+start training epoch 12....
+test_acc:  76.70
+
+
+
+start training epoch 13....
+test_acc:  76.67
+
+
+
+start training epoch 14....
+test_acc:  76.50
+
+
+
+start training epoch 15....
+test_acc:  76.25
+
+
+
+start training epoch 16....
+test_acc:  76.34
+
+
+
+start training epoch 17....
+test_acc:  76.14
+
+
+
+start training epoch 18....
+test_acc:  76.18
+
+
+
+start training epoch 19....
+test_acc:  76.04
+
+
+
+start training epoch 20....
+test_acc:  76.14
+
+
+
+start training epoch 21....
+test_acc:  75.84
+
+
+
+start training epoch 22....
+test_acc:  75.97
+
+
+
+start training epoch 23....
+test_acc:  75.87
+
+
+
+start training epoch 24....
+test_acc:  75.84
+
+
+
+start training epoch 25....
+test_acc:  75.88
+
+
+
+start training epoch 26....
+test_acc:  75.88
+
+
+
+start training epoch 27....
+test_acc:  75.81
+
+
+
+start training epoch 28....
+test_acc:  75.68
+
+
+
+start training epoch 29....
+test_acc:  75.69
+
+
+
+start training epoch 30....
+test_acc:  75.52
+
+
+
+start training epoch 31....
+test_acc:  75.61
+
+
+
+start training epoch 32....
+test_acc:  75.30
+
+
+
+start training epoch 33....
+test_acc:  75.52
+
+
+
+start training epoch 34....
+test_acc:  75.51
+
+
+
+start training epoch 35....
+test_acc:  75.60
+
+
+
+start training epoch 36....
+test_acc:  75.25
+
+
+
+start training epoch 37....
+test_acc:  75.40
+
+
+
+start training epoch 38....
+test_acc:  75.38
+
+
+
+start training epoch 39....
+test_acc:  75.47
+
+
+
+start training epoch 40....
+test_acc:  75.20
+
+
+
+start training epoch 41....
+test_acc:  75.47
+
+
+
+start training epoch 42....
+test_acc:  75.19
+
+
+
+start training epoch 43....
+test_acc:  75.47
+
+
+
+start training epoch 44....
+test_acc:  75.20
+
+
+
+start training epoch 45....
+test_acc:  75.34
+
+
+
+start training epoch 46....
+test_acc:  75.18
+
+
+
+start training epoch 47....
+test_acc:  75.18
+
+
+
+start training epoch 48....
+test_acc:  75.15
+
+
+
+start training epoch 49....
+test_acc:  75.18
+
+
+
+start training epoch 50....
+test_acc:  75.00
+
+
+
+start training epoch 51....
+test_acc:  75.15
+
+
+
+start training epoch 52....
+test_acc:  75.11
+
+
+
+start training epoch 53....
+test_acc:  75.03
+
+
+
+start training epoch 54....
+test_acc:  75.20
+
+
+
+start training epoch 55....
+test_acc:  75.13
+
+
+
+start training epoch 56....
+test_acc:  75.14
+
+
+
+start training epoch 57....
+test_acc:  74.96
+
+
+
+start training epoch 58....
+test_acc:  75.01
+
+
+
+start training epoch 59....
+test_acc:  75.04
+
+
+
+start training epoch 60....
+test_acc:  75.24
+
+
+
+start training epoch 61....
+test_acc:  75.06
+
+
+
+start training epoch 62....
+test_acc:  75.18
+
+
+
+start training epoch 63....
+test_acc:  75.10
+
+
+
+start training epoch 64....
+test_acc:  74.94
+
+
+
+start training epoch 65....
+test_acc:  75.10
+
+
+
+start training epoch 66....
+test_acc:  74.84
+
+
+
+start training epoch 67....
+test_acc:  75.12
+
+
+
+start training epoch 68....
+test_acc:  74.86
+
+
+
+start training epoch 69....
+test_acc:  74.95
+
+
+
+start training epoch 70....
+test_acc:  74.87
+
+
+
+start training epoch 71....
+test_acc:  75.01
+
+
+
+start training epoch 72....
+test_acc:  75.06
+
+
+
+start training epoch 73....
+test_acc:  74.92
+
+
+
+start training epoch 74....
+test_acc:  74.77
+
+
+
+start training epoch 75....
+test_acc:  74.76
+
+
+
+start training epoch 76....
+test_acc:  75.05
+
+
+
+start training epoch 77....
+test_acc:  74.85
+
+
+
+start training epoch 78....
+test_acc:  75.04
+
+
+
+start training epoch 79....
+test_acc:  74.89
+
+
+
+start training epoch 80....
+test_acc:  74.73
+
+
+
+start training epoch 81....
+test_acc:  74.90
+
+
+
+start training epoch 82....
+test_acc:  74.99
+
+
+
+start training epoch 83....
+test_acc:  74.77
+
+
+
+start training epoch 84....
+test_acc:  74.94
+
+
+
+start training epoch 85....
+test_acc:  74.90
+
+
+
+start training epoch 86....
+test_acc:  74.90
+
+
+
+start training epoch 87....
+test_acc:  74.94
+
+
+
+start training epoch 88....
+test_acc:  74.70
+
+
+
+start training epoch 89....
+test_acc:  74.83
+
+
+
+start training epoch 90....
+test_acc:  74.87
+
+
+
+start training epoch 91....
+test_acc:  74.82
+
+
+
+start training epoch 92....
+test_acc:  74.79
+
+
+
+start training epoch 93....
+test_acc:  74.88
+
+
+
+start training epoch 94....
+test_acc:  74.93
+
+
+
+start training epoch 95....
+test_acc:  74.82
+
+
+
+start training epoch 96....
+test_acc:  74.71
+
+
+
+start training epoch 97....
+test_acc:  74.93
+
+
+
+start training epoch 98....
+test_acc:  74.83
+
+
+
+start training epoch 99....
+test_acc:  74.85
+
+
+
+start training epoch 100....
+test_acc:  74.84
+
+
+
+Finished Training

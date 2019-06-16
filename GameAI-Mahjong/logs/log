@@ -1,0 +1,1216 @@
+start training epoch 1....
+[1,  1000] loss: 2.513
+train_acc:  29.93
+[1,  2000] loss: 2.064
+train_acc:  38.71
+[1,  3000] loss: 1.853
+train_acc:  43.94
+[1,  4000] loss: 1.706
+train_acc:  47.29
+test_acc:  51.59
+
+
+
+start training epoch 2....
+[2,  1000] loss: 1.514
+train_acc:  52.22
+[2,  2000] loss: 1.450
+train_acc:  53.87
+[2,  3000] loss: 1.428
+train_acc:  54.40
+[2,  4000] loss: 1.393
+train_acc:  55.33
+test_acc:  57.31
+
+
+
+start training epoch 3....
+[3,  1000] loss: 1.328
+train_acc:  57.16
+[3,  2000] loss: 1.298
+train_acc:  58.03
+[3,  3000] loss: 1.300
+train_acc:  57.93
+[3,  4000] loss: 1.287
+train_acc:  58.31
+test_acc:  59.65
+
+
+
+start training epoch 4....
+[4,  1000] loss: 1.246
+train_acc:  59.39
+[4,  2000] loss: 1.224
+train_acc:  60.12
+[4,  3000] loss: 1.236
+train_acc:  59.73
+[4,  4000] loss: 1.227
+train_acc:  59.97
+test_acc:  61.03
+
+
+
+start training epoch 5....
+[5,  1000] loss: 1.196
+train_acc:  60.90
+[5,  2000] loss: 1.178
+train_acc:  61.36
+[5,  3000] loss: 1.193
+train_acc:  60.90
+[5,  4000] loss: 1.187
+train_acc:  61.00
+test_acc:  61.96
+
+
+
+start training epoch 6....
+[6,  1000] loss: 1.162
+train_acc:  61.80
+[6,  2000] loss: 1.145
+train_acc:  62.22
+[6,  3000] loss: 1.161
+train_acc:  61.72
+[6,  4000] loss: 1.158
+train_acc:  61.80
+test_acc:  62.63
+
+
+
+start training epoch 7....
+[7,  1000] loss: 1.136
+train_acc:  62.45
+[7,  2000] loss: 1.123
+train_acc:  62.84
+[7,  3000] loss: 1.138
+train_acc:  62.32
+[7,  4000] loss: 1.136
+train_acc:  62.35
+test_acc:  63.14
+
+
+
+start training epoch 8....
+[8,  1000] loss: 1.113
+train_acc:  63.05
+[8,  2000] loss: 1.102
+train_acc:  63.41
+[8,  3000] loss: 1.119
+train_acc:  62.82
+[8,  4000] loss: 1.117
+train_acc:  62.89
+test_acc:  63.55
+
+
+
+start training epoch 9....
+[9,  1000] loss: 1.099
+train_acc:  63.49
+[9,  2000] loss: 1.085
+train_acc:  63.81
+[9,  3000] loss: 1.102
+train_acc:  63.31
+[9,  4000] loss: 1.102
+train_acc:  63.28
+test_acc:  64.02
+
+
+
+start training epoch 10....
+[10,  1000] loss: 1.084
+train_acc:  63.87
+[10,  2000] loss: 1.072
+train_acc:  64.22
+[10,  3000] loss: 1.090
+train_acc:  63.61
+[10,  4000] loss: 1.089
+train_acc:  63.65
+test_acc:  64.23
+
+
+
+start training epoch 11....
+[11,  1000] loss: 1.073
+train_acc:  64.18
+[11,  2000] loss: 1.060
+train_acc:  64.51
+[11,  3000] loss: 1.079
+train_acc:  63.95
+[11,  4000] loss: 1.078
+train_acc:  63.98
+test_acc:  64.46
+
+
+
+start training epoch 12....
+[12,  1000] loss: 1.062
+train_acc:  64.46
+[12,  2000] loss: 1.050
+train_acc:  64.78
+[12,  3000] loss: 1.069
+train_acc:  64.21
+[12,  4000] loss: 1.068
+train_acc:  64.21
+test_acc:  64.65
+
+
+
+start training epoch 13....
+[13,  1000] loss: 1.052
+train_acc:  64.76
+[13,  2000] loss: 1.040
+train_acc:  65.10
+[13,  3000] loss: 1.060
+train_acc:  64.50
+[13,  4000] loss: 1.060
+train_acc:  64.45
+test_acc:  64.90
+
+
+
+start training epoch 14....
+[14,  1000] loss: 1.045
+train_acc:  64.99
+[14,  2000] loss: 1.034
+train_acc:  65.24
+[14,  3000] loss: 1.052
+train_acc:  64.71
+[14,  4000] loss: 1.052
+train_acc:  64.60
+test_acc:  65.05
+
+
+
+start training epoch 15....
+[15,  1000] loss: 1.037
+train_acc:  65.18
+[15,  2000] loss: 1.026
+train_acc:  65.42
+[15,  3000] loss: 1.044
+train_acc:  64.88
+[15,  4000] loss: 1.045
+train_acc:  64.93
+test_acc:  65.22
+
+
+
+start training epoch 16....
+[16,  1000] loss: 1.029
+train_acc:  65.34
+[16,  2000] loss: 1.019
+train_acc:  65.62
+[16,  3000] loss: 1.038
+train_acc:  65.02
+[16,  4000] loss: 1.039
+train_acc:  65.03
+test_acc:  65.38
+
+
+
+start training epoch 17....
+[17,  1000] loss: 1.024
+train_acc:  65.55
+[17,  2000] loss: 1.013
+train_acc:  65.82
+[17,  3000] loss: 1.033
+train_acc:  65.23
+[17,  4000] loss: 1.033
+train_acc:  65.21
+test_acc:  65.49
+
+
+
+start training epoch 18....
+[18,  1000] loss: 1.017
+train_acc:  65.70
+[18,  2000] loss: 1.008
+train_acc:  65.94
+[18,  3000] loss: 1.028
+train_acc:  65.36
+[18,  4000] loss: 1.027
+train_acc:  65.36
+test_acc:  65.61
+
+
+
+start training epoch 19....
+[19,  1000] loss: 1.014
+train_acc:  65.85
+[19,  2000] loss: 1.003
+train_acc:  66.08
+[19,  3000] loss: 1.022
+train_acc:  65.50
+[19,  4000] loss: 1.022
+train_acc:  65.51
+test_acc:  65.77
+
+
+
+start training epoch 20....
+[20,  1000] loss: 1.009
+train_acc:  65.97
+[20,  2000] loss: 0.999
+train_acc:  66.15
+[20,  3000] loss: 1.019
+train_acc:  65.60
+[20,  4000] loss: 1.018
+train_acc:  65.61
+test_acc:  65.75
+
+
+
+start training epoch 21....
+[21,  1000] loss: 1.005
+train_acc:  66.08
+[21,  2000] loss: 0.993
+train_acc:  66.34
+[21,  3000] loss: 1.013
+train_acc:  65.74
+[21,  4000] loss: 1.014
+train_acc:  65.72
+test_acc:  65.89
+
+
+
+start training epoch 22....
+[22,  1000] loss: 1.000
+train_acc:  66.19
+[22,  2000] loss: 0.990
+train_acc:  66.41
+[22,  3000] loss: 1.009
+train_acc:  65.90
+[22,  4000] loss: 1.010
+train_acc:  65.81
+test_acc:  65.99
+
+
+
+start training epoch 23....
+[23,  1000] loss: 0.996
+train_acc:  66.30
+[23,  2000] loss: 0.987
+train_acc:  66.51
+[23,  3000] loss: 1.004
+train_acc:  65.97
+[23,  4000] loss: 1.006
+train_acc:  65.95
+test_acc:  66.11
+
+
+
+start training epoch 24....
+[24,  1000] loss: 0.993
+train_acc:  66.38
+[24,  2000] loss: 0.984
+train_acc:  66.63
+[24,  3000] loss: 1.002
+train_acc:  66.07
+[24,  4000] loss: 1.003
+train_acc:  66.01
+test_acc:  66.16
+
+
+
+start training epoch 25....
+[25,  1000] loss: 0.989
+train_acc:  66.54
+[25,  2000] loss: 0.980
+train_acc:  66.68
+[25,  3000] loss: 0.998
+train_acc:  66.19
+[25,  4000] loss: 1.001
+train_acc:  66.11
+test_acc:  66.22
+
+
+
+start training epoch 26....
+[26,  1000] loss: 0.986
+train_acc:  66.62
+[26,  2000] loss: 0.977
+train_acc:  66.82
+[26,  3000] loss: 0.995
+train_acc:  66.24
+[26,  4000] loss: 0.996
+train_acc:  66.20
+test_acc:  66.31
+
+
+
+start training epoch 27....
+[27,  1000] loss: 0.983
+train_acc:  66.64
+[27,  2000] loss: 0.974
+train_acc:  66.85
+[27,  3000] loss: 0.992
+train_acc:  66.34
+[27,  4000] loss: 0.993
+train_acc:  66.29
+test_acc:  66.34
+
+
+
+start training epoch 28....
+[28,  1000] loss: 0.981
+train_acc:  66.73
+[28,  2000] loss: 0.971
+train_acc:  66.97
+[28,  3000] loss: 0.989
+train_acc:  66.41
+[28,  4000] loss: 0.990
+train_acc:  66.35
+test_acc:  66.41
+
+
+
+start training epoch 29....
+[29,  1000] loss: 0.978
+train_acc:  66.83
+[29,  2000] loss: 0.968
+train_acc:  67.01
+[29,  3000] loss: 0.988
+train_acc:  66.48
+[29,  4000] loss: 0.987
+train_acc:  66.48
+test_acc:  66.46
+
+
+
+start training epoch 30....
+[30,  1000] loss: 0.975
+train_acc:  66.87
+[30,  2000] loss: 0.965
+train_acc:  67.15
+[30,  3000] loss: 0.984
+train_acc:  66.58
+[30,  4000] loss: 0.984
+train_acc:  66.53
+test_acc:  66.49
+
+
+
+start training epoch 31....
+[31,  1000] loss: 0.971
+train_acc:  66.97
+[31,  2000] loss: 0.963
+train_acc:  67.15
+[31,  3000] loss: 0.982
+train_acc:  66.59
+[31,  4000] loss: 0.982
+train_acc:  66.57
+test_acc:  66.62
+
+
+
+start training epoch 32....
+[32,  1000] loss: 0.970
+train_acc:  67.08
+[32,  2000] loss: 0.962
+train_acc:  67.19
+[32,  3000] loss: 0.979
+train_acc:  66.64
+[32,  4000] loss: 0.979
+train_acc:  66.72
+test_acc:  66.63
+
+
+
+start training epoch 33....
+[33,  1000] loss: 0.968
+train_acc:  67.06
+[33,  2000] loss: 0.959
+train_acc:  67.31
+[33,  3000] loss: 0.976
+train_acc:  66.80
+[33,  4000] loss: 0.977
+train_acc:  66.74
+test_acc:  66.68
+
+
+
+start training epoch 34....
+[34,  1000] loss: 0.965
+train_acc:  67.18
+[34,  2000] loss: 0.957
+train_acc:  67.36
+[34,  3000] loss: 0.975
+train_acc:  66.83
+[34,  4000] loss: 0.976
+train_acc:  66.75
+test_acc:  66.75
+
+
+
+start training epoch 35....
+[35,  1000] loss: 0.964
+train_acc:  67.22
+[35,  2000] loss: 0.955
+train_acc:  67.39
+[35,  3000] loss: 0.972
+train_acc:  66.84
+[35,  4000] loss: 0.974
+train_acc:  66.78
+test_acc:  66.72
+
+
+
+start training epoch 36....
+[36,  1000] loss: 0.961
+train_acc:  67.26
+[36,  2000] loss: 0.954
+train_acc:  67.44
+[36,  3000] loss: 0.970
+train_acc:  66.90
+[36,  4000] loss: 0.971
+train_acc:  66.96
+test_acc:  66.79
+
+
+
+start training epoch 37....
+[37,  1000] loss: 0.959
+train_acc:  67.31
+[37,  2000] loss: 0.951
+train_acc:  67.49
+[37,  3000] loss: 0.968
+train_acc:  67.01
+[37,  4000] loss: 0.969
+train_acc:  66.92
+test_acc:  66.83
+
+
+
+start training epoch 38....
+[38,  1000] loss: 0.957
+train_acc:  67.42
+[38,  2000] loss: 0.949
+train_acc:  67.53
+[38,  3000] loss: 0.967
+train_acc:  67.05
+[38,  4000] loss: 0.967
+train_acc:  67.03
+test_acc:  66.92
+
+
+
+start training epoch 39....
+[39,  1000] loss: 0.955
+train_acc:  67.47
+[39,  2000] loss: 0.946
+train_acc:  67.69
+[39,  3000] loss: 0.966
+train_acc:  67.04
+[39,  4000] loss: 0.966
+train_acc:  67.03
+test_acc:  66.97
+
+
+
+start training epoch 40....
+[40,  1000] loss: 0.953
+train_acc:  67.49
+[40,  2000] loss: 0.945
+train_acc:  67.65
+[40,  3000] loss: 0.964
+train_acc:  67.18
+[40,  4000] loss: 0.964
+train_acc:  67.10
+test_acc:  67.07
+
+
+
+start training epoch 41....
+[41,  1000] loss: 0.952
+train_acc:  67.53
+[41,  2000] loss: 0.943
+train_acc:  67.71
+[41,  3000] loss: 0.962
+train_acc:  67.13
+[41,  4000] loss: 0.961
+train_acc:  67.17
+test_acc:  66.97
+
+
+
+start training epoch 42....
+[42,  1000] loss: 0.951
+train_acc:  67.58
+[42,  2000] loss: 0.942
+train_acc:  67.74
+[42,  3000] loss: 0.960
+train_acc:  67.24
+[42,  4000] loss: 0.960
+train_acc:  67.24
+test_acc:  67.00
+
+
+
+start training epoch 43....
+[43,  1000] loss: 0.947
+train_acc:  67.66
+[43,  2000] loss: 0.941
+train_acc:  67.75
+[43,  3000] loss: 0.959
+train_acc:  67.29
+[43,  4000] loss: 0.959
+train_acc:  67.20
+test_acc:  67.08
+
+
+
+start training epoch 44....
+[44,  1000] loss: 0.946
+train_acc:  67.74
+[44,  2000] loss: 0.939
+train_acc:  67.81
+[44,  3000] loss: 0.956
+train_acc:  67.36
+[44,  4000] loss: 0.958
+train_acc:  67.27
+test_acc:  67.14
+
+
+
+start training epoch 45....
+[45,  1000] loss: 0.946
+train_acc:  67.71
+[45,  2000] loss: 0.939
+train_acc:  67.85
+[45,  3000] loss: 0.955
+train_acc:  67.33
+[45,  4000] loss: 0.956
+train_acc:  67.36
+test_acc:  67.17
+
+
+
+start training epoch 46....
+[46,  1000] loss: 0.945
+train_acc:  67.75
+[46,  2000] loss: 0.936
+train_acc:  67.88
+[46,  3000] loss: 0.954
+train_acc:  67.40
+[46,  4000] loss: 0.956
+train_acc:  67.34
+test_acc:  67.15
+
+
+
+start training epoch 47....
+[47,  1000] loss: 0.941
+train_acc:  67.78
+[47,  2000] loss: 0.935
+train_acc:  67.96
+[47,  3000] loss: 0.953
+train_acc:  67.43
+[47,  4000] loss: 0.952
+train_acc:  67.42
+test_acc:  67.14
+
+
+
+start training epoch 48....
+[48,  1000] loss: 0.941
+train_acc:  67.82
+[48,  2000] loss: 0.934
+train_acc:  67.95
+[48,  3000] loss: 0.952
+train_acc:  67.42
+[48,  4000] loss: 0.951
+train_acc:  67.48
+test_acc:  67.22
+
+
+
+start training epoch 49....
+[49,  1000] loss: 0.941
+train_acc:  67.85
+[49,  2000] loss: 0.933
+train_acc:  68.07
+[49,  3000] loss: 0.949
+train_acc:  67.49
+[49,  4000] loss: 0.950
+train_acc:  67.54
+test_acc:  67.24
+
+
+
+start training epoch 50....
+[50,  1000] loss: 0.938
+train_acc:  67.92
+[50,  2000] loss: 0.931
+train_acc:  68.01
+[50,  3000] loss: 0.949
+train_acc:  67.55
+[50,  4000] loss: 0.948
+train_acc:  67.54
+test_acc:  67.29
+
+
+
+start training epoch 51....
+[51,  1000] loss: 0.939
+train_acc:  67.92
+[51,  2000] loss: 0.931
+train_acc:  68.08
+[51,  3000] loss: 0.948
+train_acc:  67.55
+[51,  4000] loss: 0.948
+train_acc:  67.56
+test_acc:  67.29
+
+
+
+start training epoch 52....
+[52,  1000] loss: 0.937
+train_acc:  67.96
+[52,  2000] loss: 0.929
+train_acc:  68.12
+[52,  3000] loss: 0.945
+train_acc:  67.65
+[52,  4000] loss: 0.947
+train_acc:  67.60
+test_acc:  67.33
+
+
+
+start training epoch 53....
+[53,  1000] loss: 0.936
+train_acc:  67.98
+[53,  2000] loss: 0.928
+train_acc:  68.16
+[53,  3000] loss: 0.946
+train_acc:  67.59
+[53,  4000] loss: 0.946
+train_acc:  67.54
+test_acc:  67.32
+
+
+
+start training epoch 54....
+[54,  1000] loss: 0.933
+train_acc:  68.05
+[54,  2000] loss: 0.926
+train_acc:  68.20
+[54,  3000] loss: 0.943
+train_acc:  67.69
+[54,  4000] loss: 0.943
+train_acc:  67.66
+test_acc:  67.34
+
+
+
+start training epoch 55....
+[55,  1000] loss: 0.933
+train_acc:  68.01
+[55,  2000] loss: 0.924
+train_acc:  68.25
+[55,  3000] loss: 0.943
+train_acc:  67.74
+[55,  4000] loss: 0.944
+train_acc:  67.66
+test_acc:  67.37
+
+
+
+start training epoch 56....
+[56,  1000] loss: 0.932
+train_acc:  68.11
+[56,  2000] loss: 0.924
+train_acc:  68.22
+[56,  3000] loss: 0.941
+train_acc:  67.76
+[56,  4000] loss: 0.942
+train_acc:  67.68
+test_acc:  67.38
+
+
+
+start training epoch 57....
+[57,  1000] loss: 0.930
+train_acc:  68.14
+[57,  2000] loss: 0.923
+train_acc:  68.24
+[57,  3000] loss: 0.941
+train_acc:  67.76
+[57,  4000] loss: 0.941
+train_acc:  67.74
+test_acc:  67.45
+
+
+
+start training epoch 58....
+[58,  1000] loss: 0.930
+train_acc:  68.10
+[58,  2000] loss: 0.922
+train_acc:  68.35
+[58,  3000] loss: 0.940
+train_acc:  67.77
+[58,  4000] loss: 0.939
+train_acc:  67.77
+test_acc:  67.40
+
+
+
+start training epoch 59....
+[59,  1000] loss: 0.928
+train_acc:  68.23
+[59,  2000] loss: 0.921
+train_acc:  68.31
+[59,  3000] loss: 0.938
+train_acc:  67.84
+[59,  4000] loss: 0.940
+train_acc:  67.84
+test_acc:  67.47
+
+
+
+start training epoch 60....
+[60,  1000] loss: 0.928
+train_acc:  68.18
+[60,  2000] loss: 0.920
+train_acc:  68.39
+[60,  3000] loss: 0.938
+train_acc:  67.83
+[60,  4000] loss: 0.937
+train_acc:  67.85
+test_acc:  67.52
+
+
+
+start training epoch 61....
+[61,  1000] loss: 0.927
+train_acc:  68.24
+[61,  2000] loss: 0.919
+train_acc:  68.41
+[61,  3000] loss: 0.937
+train_acc:  67.84
+[61,  4000] loss: 0.937
+train_acc:  67.85
+test_acc:  67.52
+
+
+
+start training epoch 62....
+[62,  1000] loss: 0.927
+train_acc:  68.22
+[62,  2000] loss: 0.919
+train_acc:  68.44
+[62,  3000] loss: 0.934
+train_acc:  67.96
+[62,  4000] loss: 0.936
+train_acc:  67.85
+test_acc:  67.48
+
+
+
+start training epoch 63....
+[63,  1000] loss: 0.924
+train_acc:  68.31
+[63,  2000] loss: 0.918
+train_acc:  68.44
+[63,  3000] loss: 0.934
+train_acc:  67.93
+[63,  4000] loss: 0.934
+train_acc:  67.99
+test_acc:  67.55
+
+
+
+start training epoch 64....
+[64,  1000] loss: 0.924
+train_acc:  68.32
+[64,  2000] loss: 0.917
+train_acc:  68.47
+[64,  3000] loss: 0.933
+train_acc:  67.97
+[64,  4000] loss: 0.934
+train_acc:  67.92
+test_acc:  67.61
+
+
+
+start training epoch 65....
+[65,  1000] loss: 0.924
+train_acc:  68.32
+[65,  2000] loss: 0.917
+train_acc:  68.47
+[65,  3000] loss: 0.931
+train_acc:  67.99
+[65,  4000] loss: 0.933
+train_acc:  67.96
+test_acc:  67.60
+
+
+
+start training epoch 66....
+[66,  1000] loss: 0.921
+train_acc:  68.39
+[66,  2000] loss: 0.916
+train_acc:  68.49
+[66,  3000] loss: 0.931
+train_acc:  68.04
+[66,  4000] loss: 0.932
+train_acc:  68.01
+test_acc:  67.62
+
+
+
+start training epoch 67....
+[67,  1000] loss: 0.920
+train_acc:  68.41
+[67,  2000] loss: 0.914
+train_acc:  68.53
+[67,  3000] loss: 0.930
+train_acc:  68.02
+[67,  4000] loss: 0.931
+train_acc:  68.03
+test_acc:  67.65
+
+
+
+start training epoch 68....
+[68,  1000] loss: 0.920
+train_acc:  68.39
+[68,  2000] loss: 0.914
+train_acc:  68.51
+[68,  3000] loss: 0.930
+train_acc:  68.02
+[68,  4000] loss: 0.931
+train_acc:  68.00
+test_acc:  67.65
+
+
+
+start training epoch 69....
+[69,  1000] loss: 0.919
+train_acc:  68.47
+[69,  2000] loss: 0.913
+train_acc:  68.60
+[69,  3000] loss: 0.929
+train_acc:  68.07
+[69,  4000] loss: 0.929
+train_acc:  68.11
+test_acc:  67.65
+
+
+
+start training epoch 70....
+[70,  1000] loss: 0.919
+train_acc:  68.45
+[70,  2000] loss: 0.912
+train_acc:  68.67
+[70,  3000] loss: 0.927
+train_acc:  68.15
+[70,  4000] loss: 0.928
+train_acc:  68.05
+test_acc:  67.64
+
+
+
+start training epoch 71....
+[71,  1000] loss: 0.917
+train_acc:  68.53
+[71,  2000] loss: 0.910
+train_acc:  68.64
+[71,  3000] loss: 0.927
+train_acc:  68.14
+[71,  4000] loss: 0.927
+train_acc:  68.17
+test_acc:  67.62
+
+
+
+start training epoch 72....
+[72,  1000] loss: 0.917
+train_acc:  68.53
+[72,  2000] loss: 0.910
+train_acc:  68.62
+[72,  3000] loss: 0.927
+train_acc:  68.17
+[72,  4000] loss: 0.926
+train_acc:  68.15
+test_acc:  67.73
+
+
+
+start training epoch 73....
+[73,  1000] loss: 0.917
+train_acc:  68.54
+[73,  2000] loss: 0.909
+train_acc:  68.68
+[73,  3000] loss: 0.927
+train_acc:  68.21
+[73,  4000] loss: 0.927
+train_acc:  68.18
+test_acc:  67.72
+
+
+
+start training epoch 74....
+[74,  1000] loss: 0.915
+train_acc:  68.56
+[74,  2000] loss: 0.909
+train_acc:  68.75
+[74,  3000] loss: 0.925
+train_acc:  68.16
+[74,  4000] loss: 0.925
+train_acc:  68.18
+test_acc:  67.74
+
+
+
+start training epoch 75....
+[75,  1000] loss: 0.915
+train_acc:  68.59
+[75,  2000] loss: 0.908
+train_acc:  68.70
+[75,  3000] loss: 0.924
+train_acc:  68.18
+[75,  4000] loss: 0.925
+train_acc:  68.16
+test_acc:  67.67
+
+
+
+start training epoch 76....
+[76,  1000] loss: 0.914
+train_acc:  68.54
+[76,  2000] loss: 0.907
+train_acc:  68.74
+[76,  3000] loss: 0.923
+train_acc:  68.25
+[76,  4000] loss: 0.924
+train_acc:  68.16
+test_acc:  67.76
+
+
+
+start training epoch 77....
+[77,  1000] loss: 0.912
+train_acc:  68.63
+[77,  2000] loss: 0.906
+train_acc:  68.75
+[77,  3000] loss: 0.922
+train_acc:  68.29
+[77,  4000] loss: 0.923
+train_acc:  68.27
+test_acc:  67.81
+
+
+
+start training epoch 78....
+[78,  1000] loss: 0.913
+train_acc:  68.63
+[78,  2000] loss: 0.906
+train_acc:  68.78
+[78,  3000] loss: 0.922
+train_acc:  68.27
+[78,  4000] loss: 0.922
+train_acc:  68.25
+test_acc:  67.85
+
+
+
+start training epoch 79....
+[79,  1000] loss: 0.912
+train_acc:  68.69
+[79,  2000] loss: 0.905
+train_acc:  68.77
+[79,  3000] loss: 0.921
+train_acc:  68.29
+[79,  4000] loss: 0.922
+train_acc:  68.31
+test_acc:  67.79
+
+
+
+start training epoch 80....
+[80,  1000] loss: 0.910
+train_acc:  68.72
+[80,  2000] loss: 0.903
+train_acc:  68.79
+[80,  3000] loss: 0.921
+train_acc:  68.32
+[80,  4000] loss: 0.921
+train_acc:  68.25
+test_acc:  67.85
+
+
+
+start training epoch 81....
+[81,  1000] loss: 0.910
+train_acc:  68.73
+[81,  2000] loss: 0.903
+train_acc:  68.83
+[81,  3000] loss: 0.920
+train_acc:  68.35
+[81,  4000] loss: 0.920
+train_acc:  68.29
+test_acc:  67.77
+
+
+
+start training epoch 82....
+[82,  1000] loss: 0.909
+train_acc:  68.65
+[82,  2000] loss: 0.903
+train_acc:  68.86
+[82,  3000] loss: 0.919
+train_acc:  68.35
+[82,  4000] loss: 0.920
+train_acc:  68.36
+test_acc:  67.85
+
+
+
+start training epoch 83....
+[83,  1000] loss: 0.909
+train_acc:  68.76
+[83,  2000] loss: 0.902
+train_acc:  68.86
+[83,  3000] loss: 0.919
+train_acc:  68.34
+[83,  4000] loss: 0.919
+train_acc:  68.36
+test_acc:  67.86
+
+
+
+start training epoch 84....
+[84,  1000] loss: 0.908
+train_acc:  68.78
+[84,  2000] loss: 0.902
+train_acc:  68.89
+[84,  3000] loss: 0.918
+train_acc:  68.41
+[84,  4000] loss: 0.919
+train_acc:  68.40
+test_acc:  67.89
+
+
+
+start training epoch 85....
+[85,  1000] loss: 0.907
+train_acc:  68.77
+[85,  2000] loss: 0.901
+train_acc:  68.92
+[85,  3000] loss: 0.917
+train_acc:  68.40
+[85,  4000] loss: 0.917
+train_acc:  68.40
+test_acc:  67.85
+
+
+
+start training epoch 86....
+[86,  1000] loss: 0.907
+train_acc:  68.81
+[86,  2000] loss: 0.901
+train_acc:  68.91
+[86,  3000] loss: 0.916
+train_acc:  68.45
+[86,  4000] loss: 0.917
+train_acc:  68.42
+test_acc:  67.93
+
+
+
+start training epoch 87....
+[87,  1000] loss: 0.906
+train_acc:  68.77
+[87,  2000] loss: 0.900
+train_acc:  68.93
+[87,  3000] loss: 0.914
+train_acc:  68.50
+[87,  4000] loss: 0.916
+train_acc:  68.43
+test_acc:  67.90
+
+
+
+start training epoch 88....
+[88,  1000] loss: 0.905
+train_acc:  68.87
+[88,  2000] loss: 0.899
+train_acc:  68.96
+[88,  3000] loss: 0.915
+train_acc:  68.48
+[88,  4000] loss: 0.915
+train_acc:  68.45
+test_acc:  67.92
+
+
+
+start training epoch 89....
+[89,  1000] loss: 0.906
+train_acc:  68.85
+[89,  2000] loss: 0.899
+train_acc:  68.95
+[89,  3000] loss: 0.914
+train_acc:  68.50
+[89,  4000] loss: 0.915
+train_acc:  68.49
+test_acc:  67.91
+
+
+
+start training epoch 90....
+[90,  1000] loss: 0.904
+train_acc:  68.88
+[90,  2000] loss: 0.897
+train_acc:  69.01
+[90,  3000] loss: 0.914
+train_acc:  68.45
+[90,  4000] loss: 0.914
+train_acc:  68.47
+test_acc:  67.95
+
+
+
+start training epoch 91....
+[91,  1000] loss: 0.903
+train_acc:  68.95
+[91,  2000] loss: 0.898
+train_acc:  69.02
+[91,  3000] loss: 0.914
+train_acc:  68.52
+[91,  4000] loss: 0.914
+train_acc:  68.49
+test_acc:  67.94
+
+
+
+start training epoch 92....
+[92,  1000] loss: 0.904
+train_acc:  68.87
+[92,  2000] loss: 0.896
+train_acc:  69.04
+[92,  3000] loss: 0.913
+train_acc:  68.59
+[92,  4000] loss: 0.914
+train_acc:  68.51
+test_acc:  67.99
+
+
+
+start training epoch 93....
+[93,  1000] loss: 0.903
+train_acc:  68.89
+[93,  2000] loss: 0.895
+train_acc:  69.05
+[93,  3000] loss: 0.912
+train_acc:  68.53
+[93,  4000] loss: 0.912
+train_acc:  68.53
+test_acc:  67.98
+
+
+
+start training epoch 94....
+[94,  1000] loss: 0.902
+train_acc:  68.90
+[94,  2000] loss: 0.896
+train_acc:  69.04
+[94,  3000] loss: 0.911
+train_acc:  68.57
