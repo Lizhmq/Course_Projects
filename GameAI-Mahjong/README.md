@@ -6,3 +6,5 @@ Dataset:	https://pan.baidu.com/s/1vXzYUsRBNpH245SQku0b3A Extract code: rm79
 
 Detailed report can be seen at [here](report/).
 
+Example:
+![](logs/example.jpg)
